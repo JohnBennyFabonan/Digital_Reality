@@ -1,0 +1,49 @@
+.agent_dashboard_layout{
+  display: flex;
+  min-height: 100vh;
+  background: #f8f9ff;
+}
+
+::-webkit-scrollbar {
+  display: none;
+}
+
+/* Main content */
+.agent_dashboard_main {
+  flex: 1;
+  padding: 30px;
+}
+
+/* Header */
+.agent_dashboard_header {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 20px;
+}
+
+.agent_dashboard_profile {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  background: #eaeaf7;
+  padding: 10px 15px;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.agent_dashboard_profile_name {
+  font-weight: bold;
+}
+
+.agent_dashboard_profile_role {
+  font-size: 14px;
+  color: #555;
+}
+
+.agent_dashboard_toggle {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: #fff;
+  border: 1px solid #ccc;
+}

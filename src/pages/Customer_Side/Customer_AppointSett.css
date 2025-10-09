@@ -1,0 +1,152 @@
+/* Container */
+.customer_appoint-sett-container {
+  min-height: 100vh;
+  background: #f9fafb;
+}
+
+/* Header */
+.customer_appoint-sett-header {
+  background: #1d2742;
+  color: white;
+  padding: 0.8rem 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.customer_appoint-sett-header h2 {
+  margin: 0;
+  font-weight: bold;
+  font-size: 0.95rem;
+}
+
+.customer_appoint-sett-header p {
+  margin: 0 1rem;
+  font-size: 0.85rem;
+}
+
+.customer_appoint-sett-icons {
+  display: flex;
+  gap: 1rem;
+}
+
+.customer_appoint-sett-icon {
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+
+/* Title Button */
+.customer_appoint-sett-title {
+  display: flex;
+  justify-content: center;
+  margin: 1.5rem 0 1rem;
+}
+
+.customer_appoint-sett-main-btn {
+  background: white;
+  padding: 0.6rem 1.5rem;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-weight: 500;
+  font-size: 1rem;
+  cursor: pointer;
+  box-shadow: 0px 2px 4px rgba(0,0,0,0.15);
+  transition: all 0.2s ease;
+}
+
+.customer_appoint-sett-main-btn:hover {
+  background: #f3f4f6;
+}
+
+/* Tabs */
+.customer_appoint-sett-tabs {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  margin-bottom: 1.5rem;
+}
+
+.customer_appoint-sett-tab {
+  background: transparent;
+  border: none;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  color: #555;
+  padding-bottom: 0.3rem;
+  border-bottom: 2px solid transparent;
+  transition: 0.2s;
+}
+
+.customer_appoint-sett-tab:hover {
+  color: #1d2742;
+}
+
+.customer_appoint-sett-tab.active {
+  font-weight: bold;
+  border-bottom: 2px solid #1d2742;
+  color: #1d2742;
+}
+
+/* Cards Grid */
+.customer_appoint-sett-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.5rem;
+  padding: 0 2rem 2rem;
+}
+
+/* Card */
+.customer_appoint-sett-card {
+  background: white;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0px 2px 8px rgba(0,0,0,0.12);
+  transition: transform 0.2s ease;
+}
+
+.customer_appoint-sett-card:hover {
+  transform: translateY(-4px);
+}
+
+/* Card Image */
+.customer_appoint-sett-image {
+  height: 160px;
+  background: #d1d5db;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.customer_appoint-sett-rotate {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  font-weight: bold;
+  font-size: 0.95rem;
+  background: rgba(255,255,255,0.9);
+  padding: 3px 8px;
+  border-radius: 6px;
+  box-shadow: 0px 1px 3px rgba(0,0,0,0.2);
+}
+
+/* Card Body */
+.customer_appoint-sett-card-body {
+  padding: 1rem;
+}
+
+.customer_appoint-sett-card-body h3 {
+  margin: 0 0 0.5rem 0;
+  font-weight: bold;
+  font-size: 1.05rem;
+  color: #1d2742;
+}
+
+.customer_appoint-sett-card-body ul {
+  margin: 0;
+  padding-left: 1rem;
+  font-size: 0.9rem;
+  color: #333;
+  line-height: 1.4;
+}

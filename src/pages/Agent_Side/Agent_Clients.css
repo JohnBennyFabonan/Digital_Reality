@@ -1,0 +1,56 @@
+.agent_client_details_container {
+  padding: 30px;
+}
+
+/* Header */
+.agent_client_details_header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.agent_client_details_title {
+  font-size: 18px;
+  font-weight: bold;
+  color: #1a1a2e;
+  font-family: "Lora", serif;
+}
+
+/* Table Container */
+.agent_client_details_table_container {
+  margin-top: 10px;
+}
+
+/* Table */
+.agent_client_details_table {
+  width: 100%;
+  border-collapse: collapse;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.agent_client_details_table thead {
+  background: #1b2b48;
+  color: white;
+}
+
+.agent_client_details_table th,
+.agent_client_details_table td {
+  padding: 14px;
+  text-align: left;
+  border: 1px solid #e5e7eb;
+}
+
+.agent_client_details_table th {
+  font-size: 14px;
+  font-weight: bold;
+}
+
+/* Action Icons */
+.agent_client_details_action_icon {
+  margin-right: 10px;
+  cursor: pointer;
+  color: #1b2b48;
+  font-size: 16px;
+}

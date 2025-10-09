@@ -1,0 +1,90 @@
+/* Layout */
+.staff_appointment_list_container {
+  display: flex;
+  height: 100vh;
+  background: #f7f8fc;
+  font-family: 'Lora', serif;
+  font-size: 14px;
+}
+
+/* Main Content */
+.staff_appointment_list_main {
+  flex: 1;
+  padding: 30px;
+}
+
+/* Action Bar */
+.staff_appointment_list_actionbar {
+  display: flex;
+  justify-content: flex-end;
+  margin: 0 0 20px 0;
+}
+
+.staff_appointment_list_addBtn {
+  background: #1b2b48;
+  color: #fff;
+  padding: 11px 20px;
+  border-radius: 18px;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+  font-family: "Lora", serif;
+}
+
+.staff_appointment_list_addBtn:hover {
+  background: #324c7a;
+}
+
+/* Table */
+.staff_appointment_list_table_wrapper {
+  overflow-x: auto;
+}
+
+.staff_appointment_list_table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #fff;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 3px 6px rgba(0,0,0,0.08);
+}
+
+.staff_appointment_list_table th {
+  background: #1b2b48;
+  color: #fff;
+  padding: 12px;
+  text-align: left;
+  font-weight: 600;
+}
+
+.staff_appointment_list_table td {
+  padding: 12px;
+  border-bottom: 1px solid #e5e7eb;
+  color: #1b2b48;
+}
+
+.staff_appointment_list_table th, 
+.staff_appointment_list_table td {
+  padding: 14px;
+  text-align: left;
+  border: 1px solid #e5e7eb;
+}
+
+.staff_appointment_list_table tr:last-child td {
+  border-bottom: none;
+}
+
+/* Action Buttons */
+.staff_appointment_list_iconBtn {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  margin-right: 8px;
+  font-size: 16px;
+  color: #1b2b48;
+  transition: color 0.3s ease;
+}
+
+.staff_appointment_list_iconBtn:hover {
+  color: #ff4d4f;
+}

@@ -1,0 +1,116 @@
+.customer_app-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
+.customer_app-modal-content {
+  background: #dbe2f1;
+  padding: 2rem;
+  border-radius: 12px;
+  width: 450px;
+  position: relative;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.customer_app-close-btn {
+  position: absolute;
+  top: -14px;
+  right: -14px;
+  font-size: 22px;
+  font-weight: bold;
+  border: none;
+  background: #fff;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.2);
+  transition: background 0.2s ease-in-out;
+}
+
+.customer_app-close-btn:hover {
+  background: #f3f4f6;
+}
+
+
+.customer_app-modal-title {
+  text-align: center;
+  font-weight: bold;
+  margin-bottom: 1rem;
+  background: white;
+  padding: 0.25rem 1.5rem;
+  border-radius: 8px;
+  display: inline-block;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.customer_app-appointment-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.customer_app-form-row {
+  display: flex;
+  gap: 1rem;
+}
+
+/* General input styles */
+.customer_app-form-row input {
+  flex: 1;
+  padding: 0.6rem 1rem; /* add space inside */
+  border-radius: 20px;
+  border: none;
+  outline: none;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+  font-size: 0.9rem;
+}
+
+/* Fix for Date input */
+.customer_app-form-row input[type="date"] {
+  padding-right: 2.5rem; /* extra space for the icon */
+}
+
+/* Fix for Time input */
+.customer_app-form-row input[type="time"] {
+  padding-right: 2.5rem; /* extra space for the icon */
+}
+
+/* Ensure icons stay inside */
+.customer_app-form-row input[type="date"]::-webkit-calendar-picker-indicator,
+.customer_app-form-row input[type="time"]::-webkit-calendar-picker-indicator {
+  position: absolute;
+  right: 12px;
+  color: #1d2742;
+  cursor: pointer;
+  opacity: 0.7;
+}
+
+.customer_app-form-row input[type="date"]::-webkit-calendar-picker-indicator:hover,
+.customer_app-form-row input[type="time"]::-webkit-calendar-picker-indicator:hover {
+  opacity: 1;
+}
+
+.customer_app-form-actions {
+  text-align: right;
+}
+
+.customer_app-confirm-btn {
+  background: #1d2742;
+  color: white;
+  padding: 0.6rem 1.5rem;
+  border-radius: 20px;
+  border: none;
+  cursor: pointer;
+}

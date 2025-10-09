@@ -1,0 +1,64 @@
+/* Sidebar container */
+.admin_dashboard_sidebar {
+  width: 265px;
+  height: 100vh; /* full height */
+  background: #fff;
+  padding: 20px 15px;
+  box-shadow: 2px 0 6px rgba(0, 0, 0, 0.08);
+  display: flex;
+  flex-direction: column;
+  transition: all 0.2s ease-in-out;
+}
+
+/* Header */
+.admin_dashboard_sidebar_header {
+  font-size: 20px;
+  font-weight: bold;
+  color: #1b2b48;
+  margin-bottom: 25px;
+  text-align: center;
+}
+
+/* Sidebar list */
+.admin_dashboard_sidebar ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  flex: 1;
+}
+
+/* Sidebar items */
+.admin_dashboard_sidebar_item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 10px 0;
+  font-size: 18px;
+  font-weight: 500;
+  color: #1b2b48;
+  cursor: pointer;
+  padding: 12px 18px;
+  border-radius: 10px;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.admin_dashboard_sidebar_item:hover {
+  background: #f0f3fa;
+  color: #0d1b2a;
+}
+
+/* Active state */
+.admin_dashboard_sidebar_item.active {
+  background: #1b2b48;
+  color: #fff;
+  box-shadow: 0 3px 8px rgba(27, 43, 72, 0.25);
+  border-left: 6px solid #ffcd39; /* highlight accent */
+  padding-left: 16px; /* subtle slide effect */
+}
+
+/* Icon styling */
+.sidebar_icon {
+  font-size: 20px;
+  transition: color 0.3s ease;
+}

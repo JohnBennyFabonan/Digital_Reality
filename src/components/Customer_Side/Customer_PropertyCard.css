@@ -1,0 +1,38 @@
+.property-card {
+  border: 1px solid #ddd;
+  width: 100%;
+  max-width: 464px;
+  height: 538px;
+  text-align: center;
+  margin: 10px;
+  background-color: #fff;
+}
+
+.property-card h4 {
+  font-size: 35px;
+  margin: 10px 0;
+}
+
+.customer_prop-card_image-placeholder {
+  width: 100%;                  /* Ensures it matches card width */
+  height: 280px;   
+  background-color: #ccc;
+  position: relative;
+}
+
+.customer_prop-card_image-placeholder span {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  font-weight: bold;
+}
+
+.customer_prop-card_btn {
+  font-family: 'Lora', serif;
+  margin-top: 50px;
+  background-color: #0d1b2a;
+  color: white;
+  border: none;
+  padding: 10px 28px;
+  border-radius: 25px;
+}

@@ -1,0 +1,69 @@
+.admin_property_container {
+  padding: 30px;
+}
+
+/* Header */
+.admin_property_header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.admin_property_title {
+  font-size: 18px;
+  font-weight: bold;
+  color: #1a1a2e;
+}
+
+.admin_property_addButton {
+  background: #1b2b48;
+  color: #fff;
+  padding: 11px 20px;
+  border-radius: 18px;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+  font-family: "Lora", serif;
+}
+
+.admin_property_addButton:hover {
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.25);
+  transform: translateY(-2px);
+}
+
+/* --- Reports table design reused here --- */
+.admin_reports_table_container {
+  margin-top: 10px;
+}
+
+.admin_reports_table {
+  width: 100%;
+  border-collapse: collapse;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.admin_reports_table thead {
+  background: #1b2b48;
+  color: white;
+}
+
+.admin_reports_table th,
+.admin_reports_table td {
+  padding: 14px;
+  text-align: left;
+  border: 1px solid #e5e7eb;
+}
+
+.admin_reports_table th {
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.admin_reports_action_icon {
+  margin-right: 10px;
+  cursor: pointer;
+  color: #1b2b48;
+  font-size: 16px;
+}

@@ -1,0 +1,118 @@
+/* Container */
+.customer-acc-sett-container {
+  min-height: 100vh;
+  background: #f3f4f6;
+}
+
+.customer-acc-sett-content {
+  display: flex;
+  gap: 2rem;
+  padding: 2rem;
+}
+
+/* Sidebar */
+.customer-acc-sett-sidebar {
+  width: 250px;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.customer-acc-sett-sidebar-btn {
+  padding: 0.6rem 1rem;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  background: white;
+  cursor: pointer;
+  box-shadow: 0px 2px 4px rgba(0,0,0,0.1);
+}
+
+.customer-acc-sett-profile-card {
+  background: white;
+  border-radius: 10px;
+  padding: 1rem;
+  text-align: center;
+  box-shadow: 0px 2px 6px rgba(0,0,0,0.15);
+}
+
+.customer-acc-sett-avatar {
+  width: 100px;
+  height: 100px;
+  background: #d1d5db;
+  border-radius: 50%;
+  margin: 0 auto 1rem;
+}
+
+.customer-acc-sett-fullname {
+  margin: 0;
+  font-weight: bold;
+  color: #1d2742;
+}
+
+.customer-acc-sett-username {
+  margin: 0;
+  color: #555;
+}
+
+/* Form */
+.customer-acc-sett-form-section {
+  flex: 1;
+  background: white;
+  padding: 2rem;
+  border-radius: 10px;
+  box-shadow: 0px 2px 8px rgba(0,0,0,0.15);
+}
+
+.customer-acc-sett-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.customer-acc-sett-row {
+  display: flex;
+  gap: 1rem;
+}
+
+.customer-acc-sett-input-group {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.customer-acc-sett-input-group label {
+  font-size: 0.85rem;
+  margin-bottom: 0.3rem;
+  color: #333;
+}
+
+.customer-acc-sett-input-group input {
+  padding: 0.6rem;
+  border-radius: 8px;
+  border: none;
+  box-shadow: 2px 2px 6px rgba(0,0,0,0.2);
+  outline: none;
+}
+
+/* Buttons */
+.customer-acc-sett-actions {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.customer-acc-sett-save-btn {
+  background: #1d2742;
+  color: white;
+  padding: 0.6rem 1.5rem;
+  border-radius: 20px;
+  border: none;
+  cursor: pointer;
+}
+
+.customer-acc-sett-cancel-btn {
+  background: transparent;
+  color: #333;
+  border: none;
+  cursor: pointer;
+}

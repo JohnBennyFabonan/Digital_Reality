@@ -1,0 +1,98 @@
+.customer_prop-det_title {
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+/* Main layout */
+.customer_prop-det_content {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 2rem;
+  padding: 3rem 2rem;
+}
+
+/* Image Box */
+.customer_prop-det_image-box {
+  background-color: #d1d5db;
+  width: 700px;
+  height: 480px;
+  position: relative;
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
+  margin: 30px 90px 0 0;
+}
+
+.customer_prop-det_image-label {
+  position: absolute;
+  bottom: 1rem;
+  right: 1rem;
+  font-weight: bold;
+  color: #374151;
+}
+
+/* Info section */
+.customer_prop-det_info-section {
+  display: flex;
+  flex-direction: column;
+  gap: 3.5rem;
+  margin-top: 19px;
+}
+
+/* Card */
+.customer_prop-det_card {
+  background-color: white;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 0.5rem;
+  padding: 1.5rem;
+  width: 320px;
+  position: relative;
+}
+
+.customer_prop-det_card-title {
+  white-space: nowrap;      
+  text-align: center;
+  background-color: white;
+  padding: 0.25rem 1.5rem;   
+  border-radius: 0.5rem;
+  color: #1d2742;
+  font-weight: 700;
+  display: inline-block;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+  position: absolute;
+  top: -1.2rem;              
+  left: 50%;
+  transform: translateX(-50%);
+  border: 1px solid #ccc;
+}
+
+
+.customer_prop-det_card-list {
+  margin-top: 2rem;
+  list-style: none;
+  padding: 0;
+  color: #374151;
+  font-size: 0.9rem;
+}
+
+.customer_prop-det_card-list li {
+  margin-bottom: 0.5rem;
+}
+
+/* Buttons */
+.customer_prop-det_card-btn {
+  display: block;
+  margin: 1.5rem auto 0 auto;
+  background-color: #1d2742;
+  color: white;
+  padding: 0.5rem 1.5rem;
+  border-radius: 9999px;
+  border: none;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.customer_prop-det_card-btn:hover {
+  background-color: #142036;
+}

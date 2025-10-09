@@ -1,0 +1,18 @@
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #0d1b2a;
+  color: white;
+  padding: 10px 30px;
+}
+
+.navbar-left h3 {
+  margin: 0;
+}
+
+.navbar-right a {
+  margin-left: 20px;
+  color: white;
+  text-decoration: none;
+}

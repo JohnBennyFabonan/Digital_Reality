@@ -15,7 +15,7 @@ import Admin_Dashboard from "./pages/Admin_Side/Admin_Dashboard";
 import Admin_PropertyOversight from "./pages/Admin_Side/Admin_PropertyOversight";
 import Admin_Reports from "./pages/Admin_Side/Admin_Reports";
 
-// Staff Pages (fixed import typo)
+// Staff Pages
 import Staff_Layout from "./pages/Staff_Side/Staff_Layout";
 import Staff_Dashboard from "./pages/Staff_Side/Staff_Dashboard";
 import Staff_Property from "./pages/Staff_Side/Staff_Property";
@@ -28,13 +28,19 @@ import Agent_Appointments from "./pages/Agent_Side/Agent_Appointments";
 import Agent_Clients from "./pages/Agent_Side/Agent_Clients";
 import Agent_Profile from "./pages/Agent_Side/Agent_Profile";
 
+// 🔹 Real Estate Login Page
+import RealEstate_Login from "./pages/Admin_Side/RealState_Login";
+
 function App() {
   return (
     <Routes>
+      {/* 🔹 Real Estate Login Route */}
+      <Route path="/realestate-login" element={<RealEstate_Login />} />
+
       {/* Customer Routes */}
       <Route path="/" element={<Customer_LandingPage />} />
       <Route path="/customer-property-details" element={<Customer_PropertyDetails />} />
-      <Route path="/customer-appointment-sett"element={<Customer_AppointSett />} />
+      <Route path="/customer-appointment-sett" element={<Customer_AppointSett />} />
       <Route path="/customer-account-sett" element={<Customer_AccountSett />} />
 
       {/* Admin Routes */}

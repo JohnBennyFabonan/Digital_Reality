@@ -23,7 +23,6 @@ const Admin_Dashboard = () => {
           <div className="admin_dashboard_acc">
             <button className="active">Staff</button>
             <button>Agents</button>
-            <button>Clients</button>
           </div>
 
           <div className="admin_dashboard_addBtn_wrapper">

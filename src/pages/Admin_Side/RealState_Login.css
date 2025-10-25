@@ -1,0 +1,180 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap");
+
+/* Main Container */
+.realstate_login_container {
+  display: flex;
+  height: 100vh;
+  background-color: #f4f7fb;
+  font-family: "Poppins", sans-serif;
+}
+
+/* Left Panel */
+.realstate_login_left {
+  flex: 1;
+  background: linear-gradient(145deg, #0d1b2a, #1b263b);
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.realstate_login_logo {
+  width: 120px;
+  margin-bottom: 15px;
+}
+
+.realstate_login_companyName {
+  font-size: 1.8rem;
+  font-weight: 600;
+  margin-bottom: 5px;
+}
+
+.realstate_login_tagline {
+  font-size: 1rem;
+  color: #d8e3e7;
+}
+
+/* Right Panel */
+.realstate_login_right {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #ffffff;
+}
+
+.realstate_login_card {
+  width: 380px;
+  background: white;
+  border-radius: 15px;
+  padding: 40px 30px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  animation: fadeInUp 0.4s ease;
+}
+
+/* Title & Subtitle */
+.realstate_login_title {
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: #0d1b2a;
+  margin-bottom: 8px;
+}
+
+.realstate_login_subtitle {
+  color: #6b7280;
+  margin-bottom: 25px;
+  font-size: 0.95rem;
+}
+
+/* Role Selection Buttons */
+.realstate_login_roles {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  gap: 10px;
+}
+
+.realstate_login_roleButton {
+  flex: 1;
+  padding: 10px 0;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background: #f9fafb;
+  color: #333;
+  font-weight: 500;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.realstate_login_roleButton:hover {
+  background: #e6ebf0;
+}
+
+.realstate_login_roleButton.active {
+  background: #0d1b2a;
+  color: #fff;
+  border-color: #0d1b2a;
+  transform: translateY(-2px);
+}
+
+/* Input Fields */
+.realstate_login_form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.realstate_login_input {
+  padding: 12px 15px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  background: #fff;
+  font-size: 1rem;
+  transition: border 0.3s, box-shadow 0.3s;
+}
+
+.realstate_login_input:focus {
+  border-color: #007aff;
+  box-shadow: 0 0 0 3px rgba(0, 122, 255, 0.1);
+  outline: none;
+}
+
+/* Login Button */
+.realstate_login_button {
+  background: #0d1b2a;
+  color: #fff;
+  padding: 12px 15px;
+  border: none;
+  border-radius: 10px;
+  font-size: 1rem;
+  cursor: pointer;
+  margin-top: 10px;
+  transition: background 0.3s ease, transform 0.2s;
+}
+
+.realstate_login_button:hover {
+  background: #1b263b;
+  transform: translateY(-1px);
+}
+
+/* Error Message */
+.realstate_login_error {
+  color: #d9534f;
+  background: #fbeaea;
+  border: 1px solid #f5c2c0;
+  border-radius: 8px;
+  padding: 8px 10px;
+  font-size: 0.9rem;
+  text-align: center;
+}
+
+/* Animation */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(25px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .realstate_login_container {
+    flex-direction: column;
+  }
+
+  .realstate_login_left {
+    padding: 40px 20px;
+  }
+
+  .realstate_login_card {
+    width: 90%;
+    padding: 30px 20px;
+  }
+}

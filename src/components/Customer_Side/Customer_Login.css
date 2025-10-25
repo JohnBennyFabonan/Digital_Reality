@@ -1,0 +1,235 @@
+@import url("https://fonts.googleapis.com/css2?family=Lora:wght@400;600&display=swap");
+
+* {
+  font-family: "Lora", serif;
+  box-sizing: border-box;
+}
+
+/* Overlay */
+.customer_login_overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(13, 27, 42, 0.75);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  backdrop-filter: blur(4px);
+  z-index: 999;
+}
+
+/* Main Card */
+.customer_login_card {
+  display: flex;
+  width: 850px;
+  max-width: 95%;
+  height: 520px;
+  background: #ffffff;
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+  animation: fadeInUp 0.4s ease;
+}
+
+/* Left Section */
+.customer_login_left {
+  background: linear-gradient(145deg, #0d1b2a, #1b263b);
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  padding: 40px 20px;
+  text-align: center;
+}
+
+.customer_login_logo {
+  width: 100px;
+  margin-bottom: 15px;
+}
+
+.customer_login_companyName {
+  font-size: 1.6rem;
+  font-weight: 600;
+}
+
+.customer_login_tagline {
+  font-size: 0.95rem;
+  color: #e0e0e0;
+}
+
+/* Right Section */
+.customer_login_right {
+  flex: 1;
+  position: relative;
+  overflow: hidden;
+  background: #f9f9f9;
+}
+
+.customer_login_close {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: transparent;
+  border: none;
+  font-size: 1.4rem;
+  cursor: pointer;
+  color: #333;
+  z-index: 10;
+  transition: color 0.3s;
+}
+
+.customer_login_close:hover {
+  color: #007aff;
+}
+
+/* Swiping Panels Container */
+.customer_login_slider {
+  display: flex;
+  width: 200%;
+  height: 100%;
+  transition: transform 0.6s cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+.customer_login_slide_signup {
+  transform: translateX(-50%);
+}
+
+/* Individual Panels */
+.customer_login_panel {
+  width: 50%;
+  padding: 60px 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.customer_login_title {
+  font-size: 1.8rem;
+  color: #0d1b2a;
+  margin-bottom: 10px;
+}
+
+.customer_login_subtitle {
+  color: #555;
+  margin-bottom: 25px;
+  font-size: 0.95rem;
+}
+
+.customer_login_form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.customer_login_input {
+  padding: 12px 15px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+
+.customer_login_input:focus {
+  border-color: #007aff;
+  box-shadow: 0 0 0 3px rgba(0, 122, 255, 0.1);
+}
+
+.customer_login_button {
+  background: #0d1b2a;
+  color: white;
+  padding: 12px 15px;
+  border: none;
+  border-radius: 10px;
+  font-size: 1rem;
+  cursor: pointer;
+  margin-top: 10px;
+  transition: all 0.3s ease;
+}
+
+.customer_login_button:hover {
+  background: #1b263b;
+  transform: translateY(-1px);
+}
+
+.customer_login_toggle {
+  margin-top: 18px;
+  text-align: center;
+  color: #333;
+}
+
+.customer_login_toggle span {
+  color: #007aff;
+  font-weight: 600;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.customer_login_toggle span:hover {
+  color: #005fcc;
+}
+
+/* Animation */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(25px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .customer_login_card {
+    flex-direction: column;
+    height: auto;
+  }
+
+  .customer_login_left {
+    padding: 30px 20px;
+  }
+
+  .customer_login_panel {
+    width: 100%;
+    padding: 40px 25px;
+  }
+
+  .customer_login_slider {
+    width: 100%;
+    transform: translateX(0) !important;
+  }
+}
+
+/* Message styles below input fields */
+.customer_login_message {
+  margin-top: 8px;
+  font-size: 0.9rem;
+  text-align: center;
+  border-radius: 6px;
+  padding: 8px 10px;
+  animation: fadeIn 0.4s ease-in-out;
+}
+
+.customer_login_message.success {
+  background-color: #e6f4ea;
+  color: #2e7d32;
+}
+
+.customer_login_message.error {
+  background-color: #fdecea;
+  color: #c62828;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

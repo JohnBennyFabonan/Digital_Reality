@@ -16,7 +16,7 @@ import Admin_PropertyOversight from "./pages/Admin_Side/Admin_PropertyOversight"
 import Admin_Reports from "./pages/Admin_Side/Admin_Reports";
 
 // Staff Pages
-import Staff_Layout from "./pages/Staff_Side/Staff_Layout";
+import Staff_Layout from "./pages/Staff_SIde/Staff_Layout";
 import Staff_Dashboard from "./pages/Staff_Side/Staff_Dashboard";
 import Staff_Property from "./pages/Staff_Side/Staff_Property";
 import Staff_Appointment from "./pages/Staff_Side/Staff_Appointment";

@@ -119,7 +119,7 @@
 .customer_login_form {
   display: flex;
   flex-direction: column;
-  gap: 15px;
+  gap: 9px;
 }
 
 .customer_login_input {

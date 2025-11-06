@@ -54,35 +54,35 @@
 }
 
 /* --- Reports table design --- */
-.admin_reports_table_container {
+.admin_client-rec_table_container {
   margin-top: 10px;
 }
 
-.admin_reports_table {
+.admin_client-rec_table {
   width: 100%;
   border-collapse: collapse;
   border-radius: 12px;
   overflow: hidden;
 }
 
-.admin_reports_table thead {
+.admin_client-rec_table thead {
   background: #1b2b48;
   color: white;
 }
 
-.admin_reports_table th,
-.admin_reports_table td {
+.admin_client-rec_table th,
+.admin_client-rec_table td {
   padding: 14px;
   text-align: left;
   border: 1px solid #e5e7eb;
 }
 
-.admin_reports_table th {
+.admin_client-rec_table th {
   font-size: 14px;
   font-weight: bold;
 }
 
-.admin_reports_action_icon {
+.admin_client-rec_action_icon {
   margin-right: 10px;
   cursor: pointer;
   color: #1b2b48;

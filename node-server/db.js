@@ -7,7 +7,7 @@ const pool = new Pool({
   host: "localhost",       // or your host address
   database: "realestatedb", // your database name
   password: "password", // your PostgreSQL password
-  port: 5433,              // default PostgreSQL port
+  port: 5432,              // default PostgreSQL port
 });
 
 export default pool;

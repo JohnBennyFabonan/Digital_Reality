@@ -21,18 +21,39 @@ const Customer_Navbar = () => {
   }, []);
 
   // ✅ When user logs in
-  const handleLoginSuccess = () => {
+  const handleLoginSuccess = (user) => {
     setIsLoggedIn(true);
-    localStorage.setItem("isLoggedIn", "true"); // save login state
+    localStorage.setItem("isLoggedIn", "true");
+    localStorage.setItem("customerUser", JSON.stringify(user));
     setShowLogin(false);
   };
 
-  // ✅ When user logs out
-  const handleLogout = () => {
-    setIsLoggedIn(false);
-    localStorage.removeItem("isLoggedIn"); // clear saved login
-    setShowDropdown(false);
-    navigate("/");
+  useEffect(() => {
+    const loggedIn = localStorage.getItem("isLoggedIn");
+    if (loggedIn === "true") {
+      setIsLoggedIn(true);
+    }
+  }, []);
+
+  const handleLogout = async () => {
+    try {
+      // 📤 Tell backend to log out
+      await fetch("http://localhost:5000/api/logout", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+      });
+
+      // 🧹 Clear local storage and frontend state
+      localStorage.removeItem("isLoggedIn");
+      localStorage.removeItem("user"); // optional: clear user data if stored
+      setIsLoggedIn(false);
+      setShowDropdown(false);
+
+      // Redirect to home
+      navigate("/");
+    } catch (error) {
+      console.error("Logout failed:", error);
+    }
   };
 
   const handleProfileClick = () => {

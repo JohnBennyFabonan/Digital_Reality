@@ -12,6 +12,7 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 const upload = multer({ storage: multer.memoryStorage() });
 
+
 // Middleware
 app.use(cors({
   origin: "http://localhost:5173",
@@ -324,6 +325,14 @@ app.put("/api/customers/:id", async (req, res) => {
 // --------------------
 app.get("/api", (req, res) => {
   res.json({ message: "Hello from Node backend!" });
+});
+
+pool.query("SELECT NOW()", (err, result) => {
+  if (err) {
+    console.error("❌ Database connection failed:", err);
+  } else {
+    console.log("✅ Database connected successfully:", result.rows[0].now);
+  }
 });
 
 app.listen(PORT, () => {

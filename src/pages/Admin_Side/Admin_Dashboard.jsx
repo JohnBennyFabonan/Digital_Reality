@@ -1,18 +1,16 @@
 import React, { useState } from "react";
-import Sidebar from "../../components/Admin_Side/Admin_Sidebar";
 import Admin_AddStaffModal from "../../components/Admin_Side/Admin_AddStaffModal";
 import Admin_StaffTable from "../../components/Admin_Side/Admin_StaffTable";
 import Admin_AgentTable from "../../components/Admin_Side/Admin_AgentTable";
 import "./Admin_Dashboard.css";
 
 const Admin_Dashboard = () => {
-  const [activeTab, setActiveTab] = useState("staff");
+  const [activeTab, setActiveTab] = useState("staff"); // "staff" or "agent"
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   return (
     <div className="admin_dashboard">
       <main className="admin_dashboard_main">
-        {/* Tabs */}
         <div className="admin_dashboard_tabs">
           <div className="admin_dashboard_acc">
             <button
@@ -39,11 +37,9 @@ const Admin_Dashboard = () => {
           </div>
         </div>
 
-        {/* Render different tables */}
         {activeTab === "staff" ? <Admin_StaffTable /> : <Admin_AgentTable />}
       </main>
 
-      {/* Modal: pass roleType */}
       {isModalOpen && (
         <Admin_AddStaffModal
           onClose={() => setIsModalOpen(false)}

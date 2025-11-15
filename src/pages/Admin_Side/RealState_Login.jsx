@@ -14,7 +14,7 @@ const RealState_Login = () => {
     setError("");
 
     try {
-      const res = await fetch("http://localhost:5000/api/login", {
+      const res = await fetch("http://localhost:5000/api/employee-login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password, role }),
@@ -27,22 +27,27 @@ const RealState_Login = () => {
         return;
       }
 
-      // Save user info in localStorage
-      localStorage.setItem("user", JSON.stringify(data.user));
+      // clear others
+      localStorage.removeItem("customerUser");
+      localStorage.removeItem("adminUser");
+      localStorage.removeItem("staffUser");
+      localStorage.removeItem("agentUser");
 
-      // Redirect based on role
-      switch (data.user.role.toLowerCase()) {
+      switch (data.user.usertype.toLowerCase()) {
         case "admin":
+          localStorage.setItem("adminUser", JSON.stringify(data.user));
           navigate("/admin-dashboard");
           break;
         case "staff":
+          localStorage.setItem("staffUser", JSON.stringify(data.user));
           navigate("/staff-dashboard");
           break;
         case "agent":
+          localStorage.setItem("agentUser", JSON.stringify(data.user));
           navigate("/agent-dashboard");
           break;
         default:
-          navigate("/");
+          navigate("/login");
       }
     } catch (err) {
       console.error("Login error:", err);
@@ -83,6 +88,7 @@ const RealState_Login = () => {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               className="realstate_login_input"
+              required
             />
             <input
               type="password"
@@ -90,6 +96,7 @@ const RealState_Login = () => {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               className="realstate_login_input"
+              required
             />
 
             {error && <p className="realstate_login_error">{error}</p>}

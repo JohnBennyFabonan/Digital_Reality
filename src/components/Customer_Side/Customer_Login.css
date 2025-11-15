@@ -122,17 +122,31 @@
   gap: 9px;
 }
 
+/* Row for side-by-side inputs - FIXED */
+.customer_login_row {
+  display: flex;
+  gap: 9px;
+  width: 100%;
+}
+
+.customer_login_row .customer_login_input {
+  flex: 1;
+  min-width: 0; /* Important for flexbox to work properly */
+}
+
 .customer_login_input {
-  padding: 12px 15px;
+  padding: 9px 15px;
   border: 1px solid #ccc;
   border-radius: 10px;
   font-size: 1rem;
   transition: all 0.3s ease;
+  width: 100%;
 }
 
 .customer_login_input:focus {
   border-color: #007aff;
   box-shadow: 0 0 0 3px rgba(0, 122, 255, 0.1);
+  outline: none;
 }
 
 .customer_login_button {
@@ -145,6 +159,7 @@
   cursor: pointer;
   margin-top: 10px;
   transition: all 0.3s ease;
+  width: 100%;
 }
 
 .customer_login_button:hover {
@@ -156,16 +171,22 @@
   margin-top: 18px;
   text-align: center;
   color: #333;
+  font-size: 0.95rem;
 }
 
-.customer_login_toggle span {
+.link-button {
+  background: none;
+  border: none;
   color: #007aff;
   font-weight: 600;
   cursor: pointer;
   transition: color 0.2s;
+  text-decoration: underline;
+  font-size: inherit;
+  padding: 0;
 }
 
-.customer_login_toggle span:hover {
+.link-button:hover {
   color: #005fcc;
 }
 
@@ -186,6 +207,8 @@
   .customer_login_card {
     flex-direction: column;
     height: auto;
+    max-height: 90vh;
+    overflow-y: auto;
   }
 
   .customer_login_left {
@@ -200,6 +223,11 @@
   .customer_login_slider {
     width: 100%;
     transform: translateX(0) !important;
+  }
+
+  .customer_login_row {
+    flex-direction: column;
+    gap: 9px;
   }
 }
 
@@ -216,11 +244,13 @@
 .customer_login_message.success {
   background-color: #e6f4ea;
   color: #2e7d32;
+  border: 1px solid #2e7d32;
 }
 
 .customer_login_message.error {
   background-color: #fdecea;
   color: #c62828;
+  border: 1px solid #c62828;
 }
 
 @keyframes fadeIn {

@@ -2,14 +2,15 @@ import React, { useState, useEffect } from "react";
 import "./Admin_AddStaffModal.css";
 
 const Admin_AddStaffModal = ({ onClose, roleType }) => {
-  const [name, setName] = useState("");
+  const [firstname, setFirstname] = useState("");
+  const [lastname, setLastname] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
-  const [address, setAddress] = useState("");
+  const [dateOfBirth, setDateOfBirth] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [role, setRole] = useState(roleType);
-  const [image, setImage] = useState(null);
+  const [imageFile, setImageFile] = useState(null);
 
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
@@ -23,50 +24,43 @@ const Admin_AddStaffModal = ({ onClose, roleType }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Basic empty field check
-    if (!name || !email || !phone || !address || !username || !password) {
-      setPhoneError("");
-      setEmailError("");
+    if (!firstname || !lastname || !email || !phone || !username || !password || !dateOfBirth) {
       return;
     }
 
-    // ✅ Email validation
+    // Email validation
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
       setEmailError("Please enter a valid email address.");
       return;
-    } else {
-      setEmailError("");
-    }
+    } else setEmailError("");
 
-    // ✅ Phone validation (must be 11 digits)
+    // Phone validation
     const phoneRegex = /^\d{11}$/;
     if (!phoneRegex.test(phone)) {
       setPhoneError("Phone number must be exactly 11 digits.");
       return;
-    } else {
-      setPhoneError("");
-    }
+    } else setPhoneError("");
 
     setLoading(true);
     setSuccess(false);
 
-    const formData = {
-      name,
-      email,
-      phone,
-      address,
-      username,
-      password,
-      role,
-      image,
-    };
+    // Use FormData (for image upload)
+    const formData = new FormData();
+    formData.append("firstname", firstname);
+    formData.append("lastname", lastname);
+    formData.append("email", email);
+    formData.append("phonenumber", phone);
+    formData.append("dateofbirth", dateOfBirth);
+    formData.append("username", username);
+    formData.append("password", password);
+    formData.append("usertype", role);
+    formData.append("image", imageFile);
 
     try {
-      const res = await fetch("http://localhost:5000/api/add-user", {
+      const res = await fetch("http://localhost:5000/api/add-employee", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
+        body: formData,
       });
 
       const data = await res.json();
@@ -79,7 +73,7 @@ const Admin_AddStaffModal = ({ onClose, roleType }) => {
         }, 2000);
       } else {
         setLoading(false);
-        alert(data.msg || `Error adding ${role}`);
+        alert(data.msg || "Error adding employee");
       }
     } catch (err) {
       console.error("Error:", err);
@@ -91,16 +85,99 @@ const Admin_AddStaffModal = ({ onClose, roleType }) => {
   return (
     <div className="admin_addstaff_modal_overlay">
       <div className="admin_addstaff_modal">
-        <button
-          className="admin_addstaff_close"
-          onClick={onClose}
-          title="Close"
-        >
+        <button className="admin_addstaff_close" onClick={onClose}>
           ✖
         </button>
 
         <div className="admin_addstaff_content">
-          {loading ? (
+          {!loading ? (
+            <>
+              <div className="admin_addstaff_upload">
+                <div
+                  className="admin_addstaff_avatar"
+                  style={{
+                    backgroundImage: imageFile ? `url(${URL.createObjectURL(imageFile)})` : "none",
+                  }}
+                >
+                  {!imageFile && "📷"}
+                </div>
+
+                <label htmlFor="fileUpload" className="admin_addstaff_upload_label">
+                  Upload a photo
+                </label>
+
+                <input
+                  type="file"
+                  id="fileUpload"
+                  hidden
+                  accept="image/*"
+                  onChange={(e) => setImageFile(e.target.files[0])}
+                />
+
+                <button
+                  type="button"
+                  className="admin_addstaff_browse"
+                  onClick={() => document.getElementById("fileUpload").click()}
+                >
+                  Browse
+                </button>
+              </div>
+
+              <form className="admin_addstaff_form" onSubmit={handleSubmit}>
+                <h3>Add {role}</h3>
+
+                <label>First Name</label>
+                <input type="text" value={firstname} onChange={(e) => setFirstname(e.target.value)} required />
+
+                <label>Last Name</label>
+                <input type="text" value={lastname} onChange={(e) => setLastname(e.target.value)} required />
+
+                <label>Email</label>
+                <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
+                {emailError && <span className="admin_field_error">{emailError}</span>}
+
+                <label>Phone</label>
+                <input
+                  type="text"
+                  value={phone}
+                  inputMode="numeric"
+                  onChange={(e) => {
+                    const val = e.target.value.replace(/\D/g, "");
+                    if (val.length <= 11) setPhone(val);
+                  }}
+                  required
+                />
+                {phoneError && <span className="admin_field_error">{phoneError}</span>}
+
+                <label>Date of Birth</label>
+                <input type="date" value={dateOfBirth} onChange={(e) => setDateOfBirth(e.target.value)} required />
+
+                <div className="admin_addstaff_acc">
+                  <div>
+                    <label>Username</label>
+                    <input type="text" value={username} onChange={(e) => setUsername(e.target.value)} required />
+                  </div>
+
+                  <div>
+                    <label>Password</label>
+                    <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
+                  </div>
+                </div>
+
+                <input type="hidden" value={role} />
+
+                <div className="admin_addstaff_actions">
+                  <button type="submit" className="admin_addstaff_add">
+                    ADD
+                  </button>
+
+                  <button type="button" className="admin_addstaff_cancel" onClick={onClose}>
+                    CANCEL
+                  </button>
+                </div>
+              </form>
+            </>
+          ) : (
             <div className="admin_loading_popup">
               {!success ? (
                 <>
@@ -129,128 +206,6 @@ const Admin_AddStaffModal = ({ onClose, roleType }) => {
                 </>
               )}
             </div>
-          ) : (
-            <>
-              <div className="admin_addstaff_upload">
-                <div
-                  className="admin_addstaff_avatar"
-                  style={{
-                    backgroundImage: image ? `url(${image})` : "none",
-                    backgroundSize: "cover",
-                    backgroundPosition: "center",
-                  }}
-                >
-                  {!image && "📷"}
-                </div>
-
-                <label
-                  htmlFor="fileUpload"
-                  className="admin_addstaff_upload_label"
-                >
-                  Upload a photo
-                </label>
-                <input
-                  type="file"
-                  id="fileUpload"
-                  hidden
-                  accept="image/*"
-                  onChange={(e) => {
-                    const file = e.target.files[0];
-                    if (file) setImage(URL.createObjectURL(file));
-                  }}
-                />
-                <button
-                  type="button"
-                  className="admin_addstaff_browse"
-                  onClick={() => document.getElementById("fileUpload").click()}
-                >
-                  Browse
-                </button>
-              </div>
-
-              <form className="admin_addstaff_form" onSubmit={handleSubmit}>
-                <h3 className="admin_addstaff_title">Add {role}</h3>
-
-                <label>Name</label>
-                <input
-                  type="text"
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                  required
-                />
-
-                <label>Email</label>
-                <input
-                  type="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  required
-                />
-                {emailError && (
-                  <span className="admin_field_error">{emailError}</span>
-                )}
-
-                <label>Phone</label>
-                <input
-                  type="text"
-                  inputMode="numeric"
-                  value={phone}
-                  onChange={(e) => {
-                    const val = e.target.value.replace(/\D/g, "");
-                    if (val.length <= 11) setPhone(val);
-                  }}
-                  required
-                />
-                {phoneError && (
-                  <span className="admin_field_error">{phoneError}</span>
-                )}
-
-                <label>Address</label>
-                <input
-                  type="text"
-                  value={address}
-                  onChange={(e) => setAddress(e.target.value)}
-                  required
-                />
-
-                <div className="admin_addstaff_acc">
-                  <div className="admin_addstaff_field">
-                    <label>Username</label>
-                    <input
-                      type="text"
-                      value={username}
-                      onChange={(e) => setUsername(e.target.value)}
-                      required
-                    />
-                  </div>
-
-                  <div className="admin_addstaff_field">
-                    <label>Password</label>
-                    <input
-                      type="password"
-                      value={password}
-                      onChange={(e) => setPassword(e.target.value)}
-                      required
-                    />
-                  </div>
-                </div>
-
-                <input type="hidden" value={role} readOnly />
-
-                <div className="admin_addstaff_actions">
-                  <button type="submit" className="admin_addstaff_add">
-                    ADD
-                  </button>
-                  <button
-                    type="button"
-                    className="admin_addstaff_cancel"
-                    onClick={onClose}
-                  >
-                    CANCEL
-                  </button>
-                </div>
-              </form>
-            </>
           )}
         </div>
       </div>

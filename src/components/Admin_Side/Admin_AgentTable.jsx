@@ -29,10 +29,10 @@ const Admin_AgentTable = () => {
       <table className="admin_client-rec_table">
         <thead>
           <tr>
-            <th>NAME</th>
-            <th>ADDRESS</th>
-            <th>PHONE</th>
-            <th>ACTION</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Phone</th>
+            <th>Action</th>
           </tr>
         </thead>
         <tbody>
@@ -41,11 +41,11 @@ const Admin_AgentTable = () => {
               <td colSpan="4">Loading agent data...</td>
             </tr>
           ) : agentData.length > 0 ? (
-            agentData.map((row) => (
-              <tr key={row.id}>
-                <td>{row.name}</td>
-                <td>{row.address}</td>
-                <td>{row.phone}</td>
+            agentData.map((agent) => (
+              <tr key={agent.id}>
+                <td>{agent.firstname}</td>
+                <td>{agent.lastname}</td>
+                <td>{agent.phonenumber}</td>
                 <td>
                   <span className="admin_client-rec_action_icon">
                     <FaEdit />

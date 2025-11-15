@@ -1,8 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import { FaTrash, FaEdit } from "react-icons/fa";
 import "./Staff_Property.css";
+import Staff_Popup_Listing from "../../components/Staff_Side/Staff_Popup_Listing";
 
 const Staff_Property = () => {
+  const [showPopup, setShowPopup] = useState(false);
+
   const data = [
     { location: "Cuta, Batangas City", sqm: 2000, agent: "Agent 1", image: "image.png" },
     { location: "Calicanto, Batangas City", sqm: 2000, agent: "Agent 2", image: "image.png" },
@@ -14,12 +17,16 @@ const Staff_Property = () => {
   return (
     <div className="staff_property_container">
 
-      {/* Main Content */}
       <main className="staff_property_main">
 
         {/* Add Listing Button */}
         <div className="staff_property_actionbar">
-          <button className="staff_property_addBtn">ADD LISTING</button>
+          <button
+            className="staff_property_addBtn"
+            onClick={() => setShowPopup(true)}
+          >
+            ADD LISTING
+          </button>
         </div>
 
         {/* Table */}
@@ -50,6 +57,12 @@ const Staff_Property = () => {
             </tbody>
           </table>
         </div>
+
+        {/* Popup */}
+        {showPopup && (
+          <Staff_Popup_Listing onClose={() => setShowPopup(false)} />
+        )}
+
       </main>
     </div>
   );

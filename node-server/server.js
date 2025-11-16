@@ -20,7 +20,7 @@ const corsOptions = {
     
     const allowedOrigins = [
       'http://localhost:5173',
-      'https://your-frontend-app.onrender.com' // Replace with your actual frontend URL
+      'https://reality-corporation.onrender.com' // Replace with your actual frontend URL
     ];
     
     if (allowedOrigins.indexOf(origin) !== -1 || process.env.NODE_ENV !== 'production') {

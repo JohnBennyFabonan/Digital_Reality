@@ -6,6 +6,8 @@ import bcrypt from "bcrypt";
 import multer from "multer";
 
 dotenv.config();
+console.log("CHECK ENV:", process.env.PG_USER, process.env.PG_HOST);
+
 
 const { Pool } = pg;
 const app = express();

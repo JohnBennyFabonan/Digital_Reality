@@ -6,175 +6,34 @@ import bcrypt from "bcrypt";
 import multer from "multer";
 
 dotenv.config();
+console.log("CHECK ENV:", process.env.PG_USER, process.env.PG_HOST);
+
 
 const { Pool } = pg;
 const app = express();
 const PORT = process.env.PORT || 5000;
 const upload = multer({ storage: multer.memoryStorage() });
 
-// ✅ Enhanced CORS configuration
-const corsOptions = {
-  origin: function (origin, callback) {
-    // Allow requests with no origin (like mobile apps or curl requests)
-    if (!origin) return callback(null, true);
-    
-    const allowedOrigins = [
-      'http://localhost:5173',
-      'https://reality-corporation.onrender.com' // Replace with your actual frontend URL
-    ];
-    
-    if (allowedOrigins.indexOf(origin) !== -1 || process.env.NODE_ENV !== 'production') {
-      callback(null, true);
-    } else {
-      callback(new Error('Not allowed by CORS'));
-    }
-  },
-  methods: ["GET", "POST", "PUT", "DELETE"],
-  credentials: true
-};
 
-app.use(cors(corsOptions));
+// Middleware
+app.use(cors({
+  origin: "http://localhost:5173",
+  methods: ["GET", "POST"],
+}));
 app.use(express.json());
 
-// ✅ Robust Database Configuration
-const getDatabaseConfig = () => {
-  console.log('🔧 Database Configuration:');
-  console.log('   DATABASE_URL:', process.env.DATABASE_URL ? 'Present' : 'Not present');
-  console.log('   PG_HOST:', process.env.PG_HOST || 'Not set');
-  console.log('   NODE_ENV:', process.env.NODE_ENV || 'development');
-
-  // Priority 1: Use DATABASE_URL (for Render production)
-  if (process.env.DATABASE_URL) {
-    console.log('   Using DATABASE_URL for connection');
-    return {
-      connectionString: process.env.DATABASE_URL,
-      ssl: { rejectUnauthorized: false }
-    };
-  }
-
-  // Priority 2: Use individual environment variables (for local development)
-  if (process.env.PG_HOST) {
-    console.log('   Using individual PG_* variables for connection');
-    const config = {
-      host: process.env.PG_HOST,
-      user: process.env.PG_USER,
-      password: process.env.PG_PASSWORD,
-      database: process.env.PG_DATABASE,
-      port: process.env.PG_PORT || 5432,
-    };
-
-    // Only use SSL for external databases (like Render PostgreSQL)
-    if (process.env.PG_HOST.includes('render.com') || process.env.PG_HOST.includes('supabase') || process.env.PG_HOST.includes('aws')) {
-      config.ssl = { rejectUnauthorized: false };
-      console.log('   SSL enabled for external database');
-    }
-
-    return config;
-  }
-
-  // No database configuration found
-  console.error('   ❌ No database configuration found!');
-  return null;
-};
-
-const dbConfig = getDatabaseConfig();
-if (!dbConfig) {
-  console.error('💥 FATAL: No database configuration provided. Please set DATABASE_URL or PG_* environment variables.');
-  process.exit(1);
-}
-
-const pool = new Pool(dbConfig);
-
-// ✅ Enhanced Database Connection with Retry Logic
-const connectDB = async (maxRetries = 5, retryDelay = 2000) => {
-  let retries = maxRetries;
-  
-  while (retries > 0) {
-    try {
-      const client = await pool.connect();
-      const result = await client.query('SELECT NOW() as current_time, version() as version');
-      console.log('✅ Database connected successfully:');
-      console.log('   Time:', result.rows[0].current_time);
-      console.log('   Version:', result.rows[0].version.split(',')[0]); // Just first line of version
-      client.release();
-      return true;
-    } catch (error) {
-      retries--;
-      console.error(`❌ Database connection failed (${retries} retries left):`, error.message);
-      
-      if (retries === 0) {
-        console.error('💥 Could not connect to database after all retries');
-        return false;
-      }
-      
-      console.log(`   Retrying in ${retryDelay/1000} seconds...`);
-      await new Promise(resolve => setTimeout(resolve, retryDelay));
-    }
-  }
-};
-
-// ✅ Enhanced Health Check Endpoint
-app.get('/health', async (req, res) => {
-  const healthCheck = {
-    status: 'OK',
-    timestamp: new Date().toISOString(),
-    environment: process.env.NODE_ENV || 'development',
-    database: 'checking...'
-  };
-
-  try {
-    await pool.query('SELECT 1 as health_check');
-    healthCheck.database = 'connected';
-    res.status(200).json(healthCheck);
-  } catch (error) {
-    healthCheck.status = 'ERROR';
-    healthCheck.database = 'disconnected';
-    healthCheck.error = error.message;
-    res.status(500).json(healthCheck);
-  }
-});
-
-// ✅ Database Test Endpoint
-app.get('/test-db', async (req, res) => {
-  try {
-    const result = await pool.query(`
-      SELECT 
-        NOW() as current_time,
-        version() as version,
-        current_database() as database,
-        current_user as user
-    `);
-    
-    res.json({
-      success: true,
-      database: 'connected',
-      details: result.rows[0]
-    });
-  } catch (error) {
-    res.status(500).json({
-      success: false,
-      error: error.message,
-      details: 'Check your database connection and SSL configuration'
-    });
-  }
-});
-
-// ✅ Root endpoint
-app.get("/", (req, res) => {
-  res.json({ 
-    message: "Real Estate Backend API",
-    status: "running",
-    environment: process.env.NODE_ENV || 'development',
-    endpoints: {
-      health: "/health",
-      testDb: "/test-db",
-      api: "/api"
-    }
-  });
+// PostgreSQL connection
+const pool = new Pool({
+  host: process.env.PG_HOST,
+  user: process.env.PG_USER,
+  password: process.env.PG_PASSWORD,
+  database: process.env.PG_DATABASE,
+  port: process.env.PG_PORT,
+  ssl: false
 });
 
 // --------------------
-// YOUR EXISTING ROUTES (Keep all your current routes below)
+// RealState Login Route
 // --------------------
 
 app.post("/api/employee-login", async (req, res) => {
@@ -464,49 +323,21 @@ app.put("/api/customers/:id", async (req, res) => {
   }
 });
 
-// ... Keep all your other existing routes exactly as they are ...
+// --------------------
+// Test Route
+// --------------------
+app.get("/api", (req, res) => {
+  res.json({ message: "Hello from Node backend!" });
+});
 
-// ✅ Enhanced Server Startup
-const startServer = async () => {
-  try {
-    console.log('🚀 Starting Real Estate Server...');
-    console.log('📋 Configuration:');
-    console.log('   Port:', PORT);
-    console.log('   Environment:', process.env.NODE_ENV || 'development');
-    
-    // Connect to database
-    const dbConnected = await connectDB();
-    
-    if (!dbConnected) {
-      console.log('⚠️  Starting server without database connection...');
-    }
-
-    app.listen(PORT, '0.0.0.0', () => {
-      console.log('✨ Server started successfully!');
-      console.log(`📍 Local: http://localhost:${PORT}`);
-      console.log(`🔍 Health: http://localhost:${PORT}/health`);
-      console.log(`🗄️  DB Test: http://localhost:${PORT}/test-db`);
-      
-      if (!dbConnected) {
-        console.log('❌ Database is not connected - API endpoints will fail');
-      }
-    });
-  } catch (error) {
-    console.error('💥 Failed to start server:', error);
-    process.exit(1);
+pool.query("SELECT NOW()", (err, result) => {
+  if (err) {
+    console.error("❌ Database connection failed:", err);
+  } else {
+    console.log("✅ Database connected successfully:", result.rows[0].now);
   }
-};
-
-// Handle uncaught exceptions
-process.on('uncaughtException', (error) => {
-  console.error('💥 Uncaught Exception:', error);
-  process.exit(1);
 });
 
-process.on('unhandledRejection', (reason, promise) => {
-  console.error('💥 Unhandled Rejection at:', promise, 'reason:', reason);
-  process.exit(1);
+app.listen(PORT, () => {
+  console.log(`Server running at http://localhost:${PORT}`);
 });
-
-// Start the server
-startServer();

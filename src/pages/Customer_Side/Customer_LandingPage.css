@@ -1,15 +1,23 @@
+.container {
+  width: 100vw;
+  min-height: 100vh;
+  max-width: 100vw;
+  box-sizing: border-box;
+  margin: 0;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
 .property-list {
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
-
-  width: 100vw;               /* Ensure full width of viewport */
-  min-height: 100vh;          /* Ensure it fills vertical height */
+  width: 100%;
   padding: 40px 20px;
-  background-color: #f5f5f5;
-
-  overflow-y: scroll;         /* Enable vertical scroll */
-  scrollbar-width: none;     /* Firefox: hide scrollbar */
+  background-color: transparent;
+  overflow-y: auto;
 }
 
 /* Chrome, Safari, Edge - hide scrollbar */
@@ -17,11 +25,7 @@
   display: none;
 }
 
-
-.container {
-  width: 100vw;
-  max-width: 100vw;
-  box-sizing: border-box;
-  margin: 0;
+/* Firefox: hide scrollbar */
+.property-list {
+  scrollbar-width: none;
 }
-

@@ -30,10 +30,10 @@ const Admin_StaffTable = () => {
       <table className="admin_client-rec_table">
         <thead>
           <tr>
-            <th>First Name</th>
-            <th>Last Name</th>
-            <th>Phone</th>
-            <th>Action</th>
+            <th>FIRST NAME</th>
+            <th>LAST NAME</th>
+            <th>PHONE</th>
+            <th>ACTION</th>
           </tr>
         </thead>
         <tbody>

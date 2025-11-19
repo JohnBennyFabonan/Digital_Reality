@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { FaTrash, FaEdit } from "react-icons/fa";
 import "./Staff_Property.css";
-import Staff_Popup_Listing from "../../components/Staff_Side/Staff_Popup_Listing";
+import Staff_AddPropertyModal from "../../components/Staff_Side/Staff_AddPropertyModal";
 
 const Staff_Property = () => {
   const [showPopup, setShowPopup] = useState(false);
@@ -60,7 +60,7 @@ const Staff_Property = () => {
 
         {/* Popup */}
         {showPopup && (
-          <Staff_Popup_Listing onClose={() => setShowPopup(false)} />
+          <Staff_AddPropertyModal onClose={() => setShowPopup(false)} />
         )}
 
       </main>

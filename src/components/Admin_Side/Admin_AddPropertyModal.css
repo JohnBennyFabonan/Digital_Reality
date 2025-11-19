@@ -1,0 +1,207 @@
+/* Modal Overlay */
+.admin_property_modal_overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+/* Modal Container */
+.admin_property_modal {
+  background: white;
+  border-radius: 12px;
+  width: 90%;
+  max-width: 600px;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+/* Modal Header */
+.admin_property_modal_header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 25px;
+  border-bottom: 1px solid #e5e7eb;
+  background: #f8f9fa;
+  border-radius: 12px 12px 0 0;
+}
+
+.admin_property_modal_header h2 {
+  margin: 0;
+  color: #003200;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.admin_property_modal_close {
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  color: #666;
+  padding: 0;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+}
+
+.admin_property_modal_close:hover {
+  background: #e5e7eb;
+  color: #000;
+}
+
+/* Modal Form */
+.admin_property_modal_form {
+  padding: 25px;
+}
+
+.admin_property_modal_row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+  margin-bottom: 15px;
+}
+
+.admin_property_modal_field {
+  margin-bottom: 15px;
+}
+
+.admin_property_modal_field label {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: 500;
+  color: #374151;
+  font-size: 14px;
+}
+
+.admin_property_modal_field input,
+.admin_property_modal_field select,
+.admin_property_modal_field textarea {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  font-size: 14px;
+  transition: border-color 0.3s ease;
+  box-sizing: border-box;
+}
+
+.admin_property_modal_field input:focus,
+.admin_property_modal_field select:focus,
+.admin_property_modal_field textarea:focus {
+  outline: none;
+  border-color: #003200;
+  box-shadow: 0 0 0 3px rgba(0, 50, 0, 0.1);
+}
+
+.admin_property_modal_field textarea {
+  resize: vertical;
+  min-height: 80px;
+  font-family: inherit;
+}
+
+/* Price Input with Currency */
+.admin_property_price_input {
+  position: relative;
+}
+
+.admin_property_currency {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #666;
+  font-weight: bold;
+}
+
+.admin_property_price_input input {
+  padding-left: 30px;
+}
+
+/* Area Input with Unit Select */
+.admin_property_area_input {
+  display: flex;
+  gap: 10px;
+}
+
+.admin_property_area_input input {
+  flex: 1;
+}
+
+.admin_property_area_input select {
+  width: 140px;
+}
+
+/* Modal Actions */
+.admin_property_modal_actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 25px;
+  padding-top: 20px;
+  border-top: 1px solid #e5e7eb;
+}
+
+.admin_property_modal_cancel {
+  padding: 10px 20px;
+  border: 1px solid #d1d5db;
+  background: white;
+  color: #374151;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.admin_property_modal_cancel:hover {
+  background: #f9fafb;
+  border-color: #9ca3af;
+}
+
+.admin_property_modal_submit {
+  padding: 10px 20px;
+  border: none;
+  background: #003200;
+  color: white;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background 0.3s ease;
+}
+
+.admin_property_modal_submit:hover {
+  background: #002800;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .admin_property_modal {
+    width: 95%;
+    margin: 20px;
+  }
+  
+  .admin_property_modal_row {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+  
+  .admin_property_modal_actions {
+    flex-direction: column-reverse;
+  }
+  
+  .admin_property_modal_cancel,
+  .admin_property_modal_submit {
+    width: 100%;
+  }
+}

@@ -32,7 +32,7 @@
 
 /* Left Section */
 .customer_login_left {
-  background: linear-gradient(145deg, #0d1b2a, #1b263b);
+  background: linear-gradient(145deg, #003200, #1b263b);
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -106,7 +106,7 @@
 
 .customer_login_title {
   font-size: 1.8rem;
-  color: #0d1b2a;
+  color: #003200;
   margin-bottom: 10px;
 }
 
@@ -150,7 +150,7 @@
 }
 
 .customer_login_button {
-  background: #0d1b2a;
+  background: #003200;
   color: white;
   padding: 12px 15px;
   border: none;
@@ -188,6 +188,11 @@
 
 .link-button:hover {
   color: #005fcc;
+}
+
+.customer_login_logo {
+  width: 300px;
+  margin-bottom: 15px;
 }
 
 /* Animation */

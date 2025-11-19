@@ -16,23 +16,7 @@
   color: #1a1a2e;
 }
 
-.admin_property_addButton {
-  background: #1b2b48;
-  color: #fff;
-  padding: 11px 20px;
-  border-radius: 18px;
-  border: none;
-  cursor: pointer;
-  font-weight: bold;
-  font-family: "Lora", serif;
-}
-
-.admin_property_addButton:hover {
-  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.25);
-  transform: translateY(-2px);
-}
-
-/* --- Reports table design reused here --- */
+/* Table */
 .admin_reports_table_container {
   margin-top: 10px;
 }
@@ -45,7 +29,7 @@
 }
 
 .admin_reports_table thead {
-  background: #1b2b48;
+  background: #003200;
   color: white;
 }
 
@@ -56,14 +40,219 @@
   border: 1px solid #e5e7eb;
 }
 
-.admin_reports_table th {
-  font-size: 14px;
-  font-weight: bold;
+/* Action Icons */
+.admin_reports_action_icon {
+  margin-right: 12px;
+  cursor: pointer;
+  font-size: 18px;
 }
 
-.admin_reports_action_icon {
-  margin-right: 10px;
+/* Approve (green) */
+.approve_icon {
+  color: #008000;
+}
+
+/* Decline (red) */
+.decline_icon {
+  color: #cc0000;
+}
+
+.admin_reports_action_icon:hover {
+  transform: scale(1.2);
+}
+
+.admin_action_button_approve_button,
+.admin_action_button_decline_button {
+  padding: 8px 14px;
+  border: none;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: bold;
   cursor: pointer;
-  color: #1b2b48;
-  font-size: 16px;
+  transition: 0.2s ease-in-out;
+  margin-right: 8px;
+  font-family: "Lora", serif;
+}
+
+/* Approve Button */
+.admin_action_button_approve_button {
+  background-color: #0f6b0f;
+  color: white;
+}
+
+.aadmin_action_button_approve_button:hover {
+  background-color: #0a4d0a;
+  transform: translateY(-1px);
+}
+
+/* Decline Button */
+.admin_action_button_decline_button {
+  background-color: #b30000;
+  color: white;
+}
+
+.admin_action_button_decline_button {
+  background-color: #7a0000;
+  transform: translateY(-1px);
+}
+
+/* FILTER MENU ON RIGHT */
+.admin_property_status_filter {
+  display: flex;
+  gap: 15px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.filter_item {
+  color: #003200;
+  opacity: 0.6;
+  transition: 0.2s;
+}
+
+.filter_item:hover {
+  opacity: 1;
+}
+
+.active_filter {
+  color: #0f6b0f;
+  opacity: 1;
+  text-decoration: underline;
+}
+
+/* Fix button styling */
+.admin_action_button_approve_button,
+.admin_action_button_decline_button {
+  padding: 8px 14px;
+  border: none;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.2s ease-in-out;
+  margin-right: 8px;
+  font-family: "Lora", serif;
+}
+
+/* Approve Button */
+.admin_action_button_approve_button {
+  background-color: #0f6b0f;
+  color: white;
+}
+
+.admin_action_button_approve_button:hover {
+  background-color: #0a4d0a;
+}
+
+/* Decline Button */
+.admin_action_button_decline_button {
+  background-color: #b30000;
+  color: white;
+}
+
+.admin_action_button_decline_button:hover {
+  background-color: #7a0000;
+}
+
+/* Disabled State */
+.admin_action_button_approve_button:disabled,
+.admin_action_button_decline_button:disabled {
+  background-color: #cccccc !important;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* FILTER MENU ON RIGHT */
+.admin_property_status_filter {
+  display: flex;
+  gap: 15px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.filter_item {
+  color: #003200;
+  opacity: 0.6;
+  transition: 0.2s;
+}
+
+.filter_item:hover {
+  opacity: 1;
+}
+
+.active_filter {
+  color: #0f6b0f;
+  opacity: 1;
+  text-decoration: underline;
+}
+
+/* Fix button styling */
+.admin_action_button_approve_button,
+.admin_action_button_decline_button {
+  padding: 8px 14px;
+  border: none;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.2s ease-in-out;
+  margin-right: 8px;
+  font-family: "Lora", serif;
+}
+
+/* Approve Button */
+.admin_action_button_approve_button {
+  background-color: #0f6b0f;
+  color: white;
+}
+
+.admin_action_button_approve_button:hover {
+  background-color: #0a4d0a;
+}
+
+/* Decline Button */
+.admin_action_button_decline_button {
+  background-color: #b30000;
+  color: white;
+}
+
+.admin_action_button_decline_button:hover {
+  background-color: #7a0000;
+}
+
+/* Disabled State */
+.admin_action_button_approve_button:disabled,
+.admin_action_button_decline_button:disabled {
+  background-color: #cccccc !important;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.admin_action_button_view {
+  border: none;
+  margin-right: 9px;
+  background: none;
+}
+
+.admin_propertiespopup_image_container {
+  text-align: center;
+  margin-bottom: 15px;
+}
+
+.admin_propertiespopup_image {
+  max-width: 100%;
+  max-height: 250px;
+  border-radius: 12px;
+  object-fit: cover;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+}
+
+.admin_propertiespopup_link {
+  color: #003200;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.admin_propertiespopup_link:hover {
+  text-decoration: underline;
 }

@@ -1,0 +1,135 @@
+/* Overlay for popup background */
+.admin_propertiespopup_overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0,0,0,0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+/* Main popup container */
+.admin_propertiespopup_container {
+  background: #fff;
+  border-radius: 12px;
+  width: 90%;
+  max-width: 800px;
+  padding: 25px 30px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.25);
+  position: relative;
+  font-family: 'Lora', serif;
+  color: #1a1a2e;
+}
+
+/* Popup header with close icon */
+.admin_propertiespopup_header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.admin_propertiespopup_header h3 {
+  margin: 0;
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.admin_propertiespopup_close {
+  font-size: 22px;
+  color: #003200;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.admin_propertiespopup_close:hover {
+  color: #0f6b0f;
+}
+
+/* Body container uses flex for left/right */
+.admin_propertiespopup_body.admin_propertiespopup_flex {
+  display: flex;
+  gap: 30px;
+  flex-wrap: wrap; /* wrap on small screens */
+}
+
+/* LEFT SIDE: image + link container */
+.admin_propertiespopup_left {
+  flex: 1 1 250px;
+  max-width: 300px;
+}
+
+/* RIGHT SIDE: property info container */
+.admin_propertiespopup_right {
+  flex: 2 1 350px;
+}
+
+/* Image container */
+.admin_propertiespopup_image_container {
+  text-align: center;
+  margin-bottom: 15px;
+}
+
+.admin_propertiespopup_image {
+  width: 100%;
+  max-height: 250px;
+  border-radius: 12px;
+  object-fit: cover;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+}
+
+/* Link styling */
+.admin_propertiespopup_link {
+  color: #003200;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.admin_propertiespopup_link:hover {
+  text-decoration: underline;
+}
+
+/* Property info paragraphs */
+.admin_propertiespopup_right p {
+  margin: 8px 0;
+  font-size: 16px;
+  line-height: 1.4;
+}
+
+/* Footer with close button */
+.admin_propertiespopup_footer {
+  margin-top: 25px;
+  text-align: right;
+}
+
+.admin_propertiespopup_footer button {
+  background-color: #003200;
+  color: white;
+  padding: 10px 22px;
+  border: none;
+  border-radius: 20px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: 'Lora', serif;
+  transition: background-color 0.2s ease;
+}
+
+.admin_propertiespopup_footer button:hover {
+  background-color: #0f6b0f;
+}
+
+/* Responsive: stack left/right on small screens */
+@media (max-width: 600px) {
+  .admin_propertiespopup_body.admin_propertiespopup_flex {
+    flex-direction: column;
+  }
+  .admin_propertiespopup_left,
+  .admin_propertiespopup_right {
+    max-width: 100%;
+  }
+}

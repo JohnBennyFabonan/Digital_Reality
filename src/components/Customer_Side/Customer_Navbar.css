@@ -2,7 +2,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #0d1b2a;
+  background-color: #003200;
   color: white;
   padding: 10px 30px;
   position: relative;
@@ -18,7 +18,7 @@
 .customer_navbar_left p {
   margin: 0;
   font-size: 0.9rem;
-  color: #a9bcd0;
+  color: #ffffff;
 }
 
 .customer_navbar_right a {
@@ -57,7 +57,7 @@
   right: 0;
   top: 45px;
   background-color: #ffffff;
-  color: #0d1b2a;
+  color: #003200;
   border-radius: 10px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
   overflow: hidden;

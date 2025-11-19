@@ -21,7 +21,7 @@
 }
 
 .staff_property_addBtn {
-  background: #1b2b48;
+  background: #003200;
   color: #fff;
   padding: 11px 20px;
   border-radius: 19px;
@@ -50,7 +50,7 @@
 }
 
 .staff_property_table th {
-  background: #1b2b48;
+  background: #003200;
   color: #fff;
   padding: 12px;
   text-align: left;
@@ -60,7 +60,7 @@
 .staff_property_table td {
   padding: 12px;
   border-bottom: 1px solid #e5e7eb;
-  color: #1b2b48;
+  color: #003200;
 }
 
 .staff_property_table th, 
@@ -81,7 +81,7 @@
   cursor: pointer;
   margin-right: 8px;
   font-size: 16px;
-  color: #1b2b48;
+  color: #003200;
   transition: color 0.3s ease;
 }
 

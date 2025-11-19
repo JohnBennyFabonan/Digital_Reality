@@ -11,7 +11,7 @@
 /* Left Panel */
 .realstate_login_left {
   flex: 1;
-  background: linear-gradient(145deg, #0d1b2a, #1b263b);
+  background: linear-gradient(145deg, #003200, #1b263b);
   color: white;
   display: flex;
   flex-direction: column;
@@ -58,7 +58,7 @@
 .realstate_login_title {
   font-size: 1.8rem;
   font-weight: 600;
-  color: #0d1b2a;
+  color: #003200;
   margin-bottom: 8px;
 }
 
@@ -94,9 +94,9 @@
 }
 
 .realstate_login_roleButton.active {
-  background: #0d1b2a;
+  background: #003200;
   color: #fff;
-  border-color: #0d1b2a;
+  border-color: #003200;
   transform: translateY(-2px);
 }
 
@@ -124,7 +124,7 @@
 
 /* Login Button */
 .realstate_login_button {
-  background: #0d1b2a;
+  background: #003200;
   color: #fff;
   padding: 12px 15px;
   border: none;
@@ -149,6 +149,11 @@
   padding: 8px 10px;
   font-size: 0.9rem;
   text-align: center;
+}
+
+.realstate_login_logo {
+  width: 500px;
+  margin-bottom: 20px;
 }
 
 /* Animation */

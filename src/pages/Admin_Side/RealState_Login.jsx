@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./RealState_Login.css";
+import logo from "../../assets/logo.png";
 
 const RealState_Login = () => {
   const [role, setRole] = useState("Admin");
@@ -58,7 +59,7 @@ const RealState_Login = () => {
   return (
     <div className="realstate_login_container">
       <div className="realstate_login_left">
-        <img src="/logo.png" alt="Company Logo" className="realstate_login_logo" />
+        <img src={logo} alt="Company Logo" className="realstate_login_logo" />
         <h2 className="realstate_login_companyName">Blessed R&C</h2>
         <p className="realstate_login_tagline">Realty Development Corporation</p>
       </div>

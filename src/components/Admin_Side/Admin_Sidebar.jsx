@@ -1,6 +1,7 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 import { FaUsers, FaBuilding, FaChartBar } from "react-icons/fa"; // icons
+import { MdDashboard } from "react-icons/md";
 import "./Admin_Sidebar.css";
 
 const Admin_Sidebar = () => {
@@ -14,6 +15,17 @@ const Admin_Sidebar = () => {
           <NavLink
             to="."
             end
+            className={({ isActive }) =>
+              "admin_dashboard_sidebar_item" + (isActive ? " active" : "")
+            }
+          >
+            <MdDashboard  className="sidebar_icon" />
+            <span>Dashboard</span>
+          </NavLink>
+        </li>
+        <li>
+          <NavLink
+            to="user-management"
             className={({ isActive }) =>
               "admin_dashboard_sidebar_item" + (isActive ? " active" : "")
             }

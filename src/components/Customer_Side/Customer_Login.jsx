@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import "./Customer_Login.css";
+import logo from "../../assets/logo.png";
 
 const Customer_Login = ({ onClose, onLoginSuccess }) => {
   const [isSignup, setIsSignup] = useState(false);
@@ -164,7 +165,7 @@ const Customer_Login = ({ onClose, onLoginSuccess }) => {
         {/* LEFT SIDE */}
         <aside className="customer_login_left">
           <img
-            src="/logo.png"
+            src={logo}
             alt="Company Logo"
             className="customer_login_logo"
           />

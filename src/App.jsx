@@ -11,6 +11,7 @@ import Customer_LandingPage from "./pages/Customer_Side/Customer_LandingPage";
 
 // Admin Pages
 import Admin_Layout from "./pages/Admin_Side/Admin_Layout";
+import Admin_UserManagement from "./pages/Admin_Side/Admin_UserManagement";
 import Admin_Dashboard from "./pages/Admin_Side/Admin_Dashboard";
 import Admin_PropertyOversight from "./pages/Admin_Side/Admin_PropertyOversight";
 import Admin_Reports from "./pages/Admin_Side/Admin_Reports";
@@ -46,6 +47,7 @@ function App() {
       {/* Admin Routes */}
       <Route path="/admin-dashboard" element={<Admin_Layout />}>
         <Route index element={<Admin_Dashboard />} />
+        <Route path="user-management"  element={<Admin_UserManagement />} />
         <Route path="properties" element={<Admin_PropertyOversight />} />
         <Route path="reports" element={<Admin_Reports />} />
       </Route>

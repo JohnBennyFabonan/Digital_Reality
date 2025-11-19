@@ -14,7 +14,7 @@
 .admin_dashboard_sidebar_header {
   font-size: 20px;
   font-weight: bold;
-  color: #1b2b48;
+  color: #003200;
   margin-bottom: 25px;
   text-align: center;
 }
@@ -35,7 +35,7 @@
   margin: 10px 0;
   font-size: 18px;
   font-weight: 500;
-  color: #1b2b48;
+  color: #003200;
   cursor: pointer;
   padding: 12px 18px;
   border-radius: 10px;
@@ -45,12 +45,12 @@
 
 .admin_dashboard_sidebar_item:hover {
   background: #f0f3fa;
-  color: #0d1b2a;
+  color: #003200;
 }
 
 /* Active state */
 .admin_dashboard_sidebar_item.active {
-  background: #1b2b48;
+  background: #003200;
   color: #fff;
   box-shadow: 0 3px 8px rgba(27, 43, 72, 0.25);
   border-left: 6px solid #ffcd39; /* highlight accent */

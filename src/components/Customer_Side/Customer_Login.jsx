@@ -140,12 +140,18 @@ const Customer_Login = ({ onClose, onLoginSuccess }) => {
         const data = await res.json();
 
         if (res.ok) {
+          // Store login token or user ID
+          localStorage.setItem("isLoggedIn", "true");
+          localStorage.setItem("customer_token", data.token || "loggedin");
+
           setMessageType("success");
           setMessage("✅ Logged in successfully!");
+
           setTimeout(() => {
             if (onLoginSuccess) onLoginSuccess(data.user);
             onClose();
-          }, 1500);
+            navigate("/"); // ✅ redirect to homepage
+          }, 1200);
         } else {
           setMessageType("error");
           setMessage(`⚠️ ${data.msg || "Invalid credentials"}`);
@@ -164,11 +170,7 @@ const Customer_Login = ({ onClose, onLoginSuccess }) => {
       <div className="customer_login_card">
         {/* LEFT SIDE */}
         <aside className="customer_login_left">
-          <img
-            src={logo}
-            alt="Company Logo"
-            className="customer_login_logo"
-          />
+          <img src={logo} alt="Company Logo" className="customer_login_logo" />
           <h2 className="customer_login_companyName">Blessed R&C</h2>
           <p className="customer_login_tagline">
             Realty Development Corporation

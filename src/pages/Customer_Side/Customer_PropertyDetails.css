@@ -1,6 +1,17 @@
-.customer_prop-det_title {
-  font-size: 1.25rem;
-  font-weight: 600;
+.property-details {
+  min-height: 100vh;
+  background-color: #f9fafb;
+}
+
+.loading, .error {
+  text-align: center;
+  padding: 2rem;
+  font-size: 1.2rem;
+  color: #666;
+}
+
+.error {
+  color: #dc2626;
 }
 
 /* Main layout */
@@ -10,34 +21,123 @@
   align-items: flex-start;
   gap: 2rem;
   padding: 3rem 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Image Container */
+.customer_prop-det_image-container {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  max-width: 700px;
 }
 
 /* Image Box */
 .customer_prop-det_image-box {
-  background-color: #d1d5db;
-  width: 700px;
-  height: 480px;
-  position: relative;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  padding: 1rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  margin-bottom: 1rem;
+  height: 480px; /* Keep container height same */
   display: flex;
-  justify-content: flex-end;
-  align-items: flex-end;
-  margin: 30px 90px 0 0;
+  align-items: center;
+  justify-content: center;
 }
 
-.customer_prop-det_image-label {
+/* Image Grid Layout */
+.customer_prop-det_image-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  gap: 1rem;
+  height: 100%;
+  width: 100%;
+  max-height: 437px;
+  max-width: 647px;
+  margin: auto; /* Center the grid */
+}
+
+.customer_prop-det_image-wrapper {
+  position: relative;
+  border-radius: 6px;
+  overflow: hidden;
+  background-color: #e5e7eb;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.customer_prop-det_image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 6px;
+  transition: transform 0.3s ease;
+  max-height: 214px; /* Make individual images smaller */
+}
+
+.customer_prop-det_image:hover {
+  transform: scale(1.02);
+}
+
+.customer_prop-det_image-fallback {
   position: absolute;
-  bottom: 1rem;
-  right: 1rem;
-  font-weight: bold;
-  color: #374151;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #e5e7eb;
+  color: #6b7280;
+  font-size: 0.9rem;
+  border-radius: 6px;
+}
+
+.no-images {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  color: #6b7280;
+  font-size: 1.1rem;
+  background-color: #f3f4f6;
+  border-radius: 8px;
+  width: 100%;
+}
+
+/* Virtual Tour Link - Under the image container */
+.customer_prop-det_virtual-tour-link {
+  display: block;
+  color: #003200;
+  text-decoration: none;
+  font-weight: 500;
+  padding: 0.75rem 1rem;
+  background-color: #f0f7f0;
+  border-radius: 6px;
+  border: 1px solid #d1e7dd;
+  transition: all 0.3s ease;
+  text-align: center;
+  font-size: 0.95rem;
+}
+
+.customer_prop-det_virtual-tour-link:hover {
+  color: #005500;
+  background-color: #e1f0e1;
+  text-decoration: underline;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 4px rgba(0, 80, 0, 0.1);
 }
 
 /* Info section */
 .customer_prop-det_info-section {
   display: flex;
   flex-direction: column;
-  gap: 3.5rem;
-  margin-top: 19px;
+  gap: 2.5rem;
+  flex-shrink: 0;
 }
 
 /* Card */
@@ -45,54 +145,108 @@
   background-color: white;
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
   border-radius: 0.5rem;
-  padding: 1.5rem;
-  width: 320px;
+  padding: 1rem;
+  width: 359px;
   position: relative;
+  border: 1px solid #e5e7eb;
 }
 
 .customer_prop-det_card-title {
   white-space: nowrap;      
   text-align: center;
   background-color: white;
-  padding: 0.25rem 1.5rem;   
+  padding: 0.5rem 1.5rem;   
   border-radius: 0.5rem;
-  color: #1d2742;
+  color: #003200;
   font-weight: 700;
   display: inline-block;
-  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
   position: absolute;
   top: -1.2rem;              
   left: 50%;
   transform: translateX(-50%);
-  border: 1px solid #ccc;
+  border: 1px solid #d1d5db;
+  font-size: 1.1rem;
 }
-
 
 .customer_prop-det_card-list {
   margin-top: 2rem;
   list-style: none;
   padding: 0;
   color: #374151;
-  font-size: 0.9rem;
+  font-size: 0.95rem;
+  line-height: 1.6;
 }
 
 .customer_prop-det_card-list li {
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.75rem;
+  padding-left: 0.5rem;
 }
 
 /* Buttons */
 .customer_prop-det_card-btn {
   display: block;
   margin: 1.5rem auto 0 auto;
-  background-color: #1d2742;
+  background-color: #003200;
   color: white;
-  padding: 0.5rem 1.5rem;
+  padding: 0.75rem 2rem;
   border-radius: 9999px;
   border: none;
   cursor: pointer;
   transition: background 0.3s;
+  font-weight: 600;
+  font-size: 0.95rem;
+  min-width: 120px;
 }
 
 .customer_prop-det_card-btn:hover {
-  background-color: #142036;
+  background-color: #004d00;
+  transform: translateY(-1px);
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .customer_prop-det_content {
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+  }
+  
+  .customer_prop-det_image-container {
+    max-width: 100%;
+    margin-right: 0;
+  }
+  
+  .customer_prop-det_info-section {
+    flex-direction: row;
+    justify-content: center;
+    gap: 2rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .customer_prop-det_content {
+    padding: 2rem 1rem;
+  }
+  
+  .customer_prop-det_image-grid {
+    grid-template-columns: 1fr;
+    grid-template-rows: repeat(4, 1fr);
+    max-height: 500px;
+  }
+  
+  .customer_prop-det_info-section {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .customer_prop-det_card {
+    width: 100%;
+    max-width: 400px;
+  }
+  
+  .customer_prop-det_virtual-tour-link {
+    font-size: 0.9rem;
+    padding: 0.6rem 0.8rem;
+  }
 }

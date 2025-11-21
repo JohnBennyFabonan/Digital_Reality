@@ -1,6 +1,6 @@
-// src/App.jsx
 import React from "react";
 import { Routes, Route } from "react-router-dom";
+import { AuthProvider } from "./context/AuthContext";
 import "./App.css";
 
 // Customer Pages
@@ -34,39 +34,42 @@ import RealEstate_Login from "./pages/Admin_Side/RealState_Login";
 
 function App() {
   return (
-    <Routes>
-      {/* 🔹 Real Estate Login Route */}
-      <Route path="/realestate-login" element={<RealEstate_Login />} />
+    <AuthProvider>
+      <Routes>
+        {/* 🔹 Real Estate Login Route */}
+        <Route path="/realestate-login" element={<RealEstate_Login />} />
 
-      {/* Customer Routes */}
-      <Route path="/" element={<Customer_LandingPage />} />
-      <Route path="/customer-property-details" element={<Customer_PropertyDetails />} />
-      <Route path="/customer-appointment-sett" element={<Customer_AppointSett />} />
-      <Route path="/customer-account-sett" element={<Customer_AccountSett />} />
+        {/* Customer Routes */}
+        <Route path="/" element={<Customer_LandingPage />} />
+        {/* Add :id parameter to the route */}
+        <Route path="/customer-property-details/:id" element={<Customer_PropertyDetails />} />
+        <Route path="/customer-appointment-sett" element={<Customer_AppointSett />} />
+        <Route path="/customer-account-sett" element={<Customer_AccountSett />} />
 
-      {/* Admin Routes */}
-      <Route path="/admin-dashboard" element={<Admin_Layout />}>
-        <Route index element={<Admin_Dashboard />} />
-        <Route path="user-management"  element={<Admin_UserManagement />} />
-        <Route path="properties" element={<Admin_PropertyOversight />} />
-        <Route path="reports" element={<Admin_Reports />} />
-      </Route>
+        {/* Admin Routes */}
+        <Route path="/admin-dashboard" element={<Admin_Layout />}>
+          <Route index element={<Admin_Dashboard />} />
+          <Route path="user-management"  element={<Admin_UserManagement />} />
+          <Route path="properties" element={<Admin_PropertyOversight />} />
+          <Route path="reports" element={<Admin_Reports />} />
+        </Route>
 
-      {/* Staff Routes */}
-      <Route path="/staff-dashboard" element={<Staff_Layout />}>
-        <Route index element={<Staff_Dashboard />} />
-        <Route path="property" element={<Staff_Property />} />
-        <Route path="appointment" element={<Staff_Appointment />} />
-      </Route>
+        {/* Staff Routes */}
+        <Route path="/staff-dashboard" element={<Staff_Layout />}>
+          <Route index element={<Staff_Dashboard />} />
+          <Route path="property" element={<Staff_Property />} />
+          <Route path="appointment" element={<Staff_Appointment />} />
+        </Route>
 
-      {/* Agent Routes */}
-      <Route path="/agent-dashboard" element={<Agent_Layout />}>
-        <Route index element={<Agent_Dashboard />} />
-        <Route path="appointments" element={<Agent_Appointments />} />
-        <Route path="clients" element={<Agent_Clients />} />
-        <Route path="profile" element={<Agent_Profile />} />
-      </Route>
-    </Routes>
+        {/* Agent Routes */}
+        <Route path="/agent-dashboard" element={<Agent_Layout />}>
+          <Route index element={<Agent_Dashboard />} />
+          <Route path="appointments" element={<Agent_Appointments />} />
+          <Route path="clients" element={<Agent_Clients />} />
+          <Route path="profile" element={<Agent_Profile />} />
+        </Route>
+      </Routes>
+    </AuthProvider>
   );
 }
 

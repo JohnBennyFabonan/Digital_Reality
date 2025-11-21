@@ -1,90 +1,136 @@
-/* Layout */
-.staff_dashboard_container {
+.staff_dashboard {
+  padding: 30px 40px;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background: #f9fafc;
+  min-height: 100vh;
+  box-sizing: border-box;
+}
+
+/* Summary cards container */
+.staff_dashboard_summary_cards {
   display: flex;
-  height: 100vh;
-  background: #f7f8fc;
-  font-family: 'Lora', serif;
-  font-size: 14px;
+  gap: 28px;
+  margin-bottom: 36px;
 }
 
-/* Main Content */
-.staff_dashboard_main {
-  flex: 1;
-  padding: 30px;
-}
-
-/* Actionbar */
-.staff_dashboard_actionbar {
+/* Individual summary card */
+.staff_dashboard_card {
+  background: white;
+  flex: 1 1 280px;
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgb(45 85 23 / 0.05);
+  padding: 22px 30px;
   display: flex;
-  justify-content: flex-end;
-  margin: 0 0 20px 0;
+  align-items: center;
+  gap: 20px;
+  user-select: none;
+  cursor: default;
+  transition: box-shadow 0.3s ease;
 }
 
-.staff_dashboard_addBtn {
-  background: #003200;
-  color: #fff;
-  padding: 11px 20px;
-  border-radius: 18px;
-  border: none;
-  cursor: pointer;
-  font-weight: bold;
-  font-family: "Lora", serif;
+.staff_dashboard_card:hover {
+  box-shadow: 0 12px 40px rgb(45 85 23 / 0.15);
 }
 
-.staff_dashboard_addBtn:hover {
-  background: #324c7a;
+/* Icon container inside card */
+.staff_dashboard_card_icon {
+  background-color: #e7f1f6;
+  padding: 12px;
+  border-radius: 12px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-/* Table */
-.staff_dashboard_table_wrapper {
+.staff_dashboard_card_icon img {
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+}
+
+/* Text content in card */
+.staff_dashboard_card_content small {
+  color: #7e7e91;
+  font-weight: 600;
+  display: block;
+  margin-bottom: 6px;
+}
+
+.staff_dashboard_card_content h3 {
+  font-weight: 700;
+  font-size: 28px;
+  margin: 0;
+  color: #1b3a2a;
+}
+
+/* Table container */
+.staff_dashboard_table_container {
   overflow-x: auto;
+  background: white;
+  border-radius: 16px;
+  padding: 15px 20px;
+  box-shadow: 0 8px 20px rgb(0 0 0 / 0.04);
 }
 
+/* Table styling */
 .staff_dashboard_table {
   width: 100%;
   border-collapse: collapse;
-  background: #fff;
-  border-radius: 12px;
-  overflow: hidden;
-  box-shadow: 0 3px 6px rgba(0,0,0,0.08);
+  font-size: 15px;
+  min-width: 700px;
+}
+
+.staff_dashboard_table th,
+.staff_dashboard_table td {
+  padding: 14px 18px;
+  text-align: left;
+  border-bottom: 1px solid #f1f1f1;
 }
 
 .staff_dashboard_table th {
-  background: #003200;
-  color: #fff;
-  padding: 12px;
-  text-align: left;
+  background-color: #f9fafc;
+  color: #4b4b4b;
+  font-weight: 700;
+}
+
+/* Status badges */
+.status {
+  padding: 6px 14px;
+  border-radius: 14px;
   font-weight: 600;
+  user-select: none;
+  display: inline-block;
+  font-size: 13px;
 }
 
-.staff_dashboard_table td {
-  padding: 12px;
-  border-bottom: 1px solid #e5e7eb;
-  color: #003200;
+.status.confirmed {
+  background-color: #d7f1db;
+  color: #237a23;
 }
 
-.staff_dashboard_table th, 
-.staff_dashboard_table td {
-  padding: 14px;
-  text-align: left;
-  border: 1px solid #e5e7eb;
+.status.pending {
+  background-color: #f9f3cd;
+  color: #8a6d1f;
 }
 
-.staff_dashboard_table tr:last-child td {
-  border-bottom: none;
+.status.cancelled {
+  background-color: #fddede;
+  color: #b32f2f;
 }
 
-/* Action Buttons */
-.staff_dashboard_iconBtn {
-  background: transparent;
-  border: none;
+/* Action icons */
+.actions {
+  display: flex;
+  gap: 12px;
+}
+
+.action_icon {
   cursor: pointer;
-  margin-right: 8px;
-  font-size: 16px;
-  color: #003200;
+  font-size: 17px;
+  color: #888888;
   transition: color 0.3s ease;
 }
 
-.staff_dashboard_iconBtn:hover {
-  color: #ff4d4f;
+.action_icon:hover {
+  color: #0b390d;
 }

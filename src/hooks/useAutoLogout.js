@@ -19,6 +19,8 @@ const useAutoLogout = (timeoutMinutes = 20) => {
       // Clear only the relevant user type
       if (isCustomer) {
         localStorage.removeItem("customerUser");
+        localStorage.removeItem("isLoggedIn"); // Also remove this
+        localStorage.removeItem("customer_token"); // And this
         alert("Session expired. You've been logged out due to inactivity.");
         navigate("/");
       } else if (isAdmin) {

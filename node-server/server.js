@@ -17,9 +17,23 @@ const upload = multer({ storage: multer.memoryStorage() });
 app.use('/uploads', express.static(path.join(process.cwd(), 'uploads')));
 
 // Middleware
+const allowedOrigins = [
+  "http://localhost:5173",
+  "https://digital-reality.onrender.com",
+];
+
 app.use(cors({
-  origin: "*",
+  origin: (origin, callback) => {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      console.log("❌ CORS blocked:", origin);
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
+  credentials: true,
 }));
+
 
 // PostgreSQL connection
 const pool = new Pool({

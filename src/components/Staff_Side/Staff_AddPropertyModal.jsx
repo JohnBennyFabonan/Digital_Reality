@@ -15,7 +15,7 @@ const Staff_AddPropertyModal = ({
     lot_area: propertyData?.lot_area || "",
     area_unit: propertyData?.area_unit || "sqm",
     location: propertyData?.location || "",
-    description: propertyData?.description || "",
+    link: propertyData?.link || "",
     images: [], // multiple images
   });
 
@@ -112,14 +112,14 @@ const Staff_AddPropertyModal = ({
     data.append("lot_area", formData.lot_area);
     data.append("area_unit", formData.area_unit);
     data.append("location", formData.location);
-    data.append("description", formData.description);
+    data.append("link", formData.link);
 
     formData.images.forEach((imageFile) => {
       data.append("images", imageFile);
     });
 
     try {
-      const res = await fetch("http://localhost:5000/api/properties", {
+      const res = await fetch("https://reality-corporation.onrender.com/api/properties", {
         method: "POST",
         body: data,
       });
@@ -182,8 +182,8 @@ const Staff_AddPropertyModal = ({
               <div className="staff_addproperty_modal_field">
                 <label>Virtual Tour / Video Link</label>
                 <textarea
-                  name="description"
-                  value={formData.description}
+                  name="link"
+                  value={formData.link}
                   onChange={handleChange}
                   placeholder="Enter virtual tour link"
                   rows="6"

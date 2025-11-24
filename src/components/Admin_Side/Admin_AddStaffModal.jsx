@@ -58,7 +58,7 @@ const Admin_AddStaffModal = ({ onClose, roleType }) => {
     formData.append("image", imageFile);
 
     try {
-      const res = await fetch("http://localhost:5000/api/add-employee", {
+      const res = await fetch("https://reality-corporation.onrender.com/api/add-employee", {
         method: "POST",
         body: formData,
       });

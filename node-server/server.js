@@ -19,7 +19,8 @@ app.use('/uploads', express.static(path.join(process.cwd(), 'uploads')));
 // Middleware
 app.use(cors({
   origin: "http://localhost:5173",
-  methods: ["GET", "POST"],
+  methods: ["GET", "POST", "PUT", "DELETE"],
+  allowedHeaders: ["Content-Type", "Authorization"]
 }));
 app.use(express.json());
 
@@ -363,7 +364,8 @@ app.post('/api/properties', uploadMultiple.array('images', 10), async (req, res)
     province,
     lot_area,
     area_unit,
-    location
+    location,
+    description // Add description for the link
   } = req.body;
 
   const employee_id = 1; // creator - from auth/session
@@ -386,8 +388,17 @@ app.post('/api/properties', uploadMultiple.array('images', 10), async (req, res)
     const allAgentsResult = await pool.query(allAgentsQuery);
     const allAgents = allAgentsResult.rows.map(row => row.employee_id);
 
+    console.log('Available agents found:', allAgents); // Debug log
+    console.log('All agents result:', allAgentsResult.rows); // Debug log
+
     if (allAgents.length === 0) {
-      return res.status(400).json({ msg: 'No available agents for assignment' });
+      return res.status(400).json({ 
+        msg: 'No available agents for assignment',
+        debug: {
+          query: allAgentsQuery,
+          result: allAgentsResult.rows
+        }
+      });
     }
 
     // Get current date and time for comparison
@@ -398,6 +409,10 @@ app.post('/api/properties', uploadMultiple.array('images', 10), async (req, res)
     const bufferMinutes = 120; // 2 hours buffer
     const bufferTime = new Date(currentDateTime.getTime() + bufferMinutes * 60000);
     const bufferTimeString = bufferTime.toTimeString().split(' ')[0];
+
+    console.log('Current date:', currentDate); // Debug log
+    console.log('Current time:', currentDateTime.toTimeString().split(' ')[0]); // Debug log
+    console.log('Buffer time:', bufferTimeString); // Debug log
 
     // Get agents with active bookings that overlap with current date/time (with buffer)
     const busyAgentsQuery = `
@@ -415,10 +430,15 @@ app.post('/api/properties', uploadMultiple.array('images', 10), async (req, res)
     ]);
     const busyAgents = busyAgentsResult.rows.map(row => row.employee_id);
 
+    console.log('Busy agents found:', busyAgents); // Debug log
+    console.log('Busy agents result:', busyAgentsResult.rows); // Debug log
+
     // Find available agents (not busy with current bookings within buffer period)
     const availableAgents = allAgents.filter(agentId => 
       !busyAgents.includes(agentId)
     );
+
+    console.log('Available agents after busy filter:', availableAgents); // Debug log
 
     let randomAgentId;
     let assignmentType;
@@ -432,6 +452,9 @@ app.post('/api/properties', uploadMultiple.array('images', 10), async (req, res)
       randomAgentId = allAgents[Math.floor(Math.random() * allAgents.length)];
       assignmentType = 'All Agents Busy - Random Assignment from Available Status Agents';
     }
+
+    console.log('Selected agent ID:', randomAgentId); // Debug log
+    console.log('Assignment type:', assignmentType); // Debug log
 
     // Insert property
     const insertPropertyQuery = `
@@ -455,14 +478,14 @@ app.post('/api/properties', uploadMultiple.array('images', 10), async (req, res)
 
     const listing_id = propertyResult.rows[0].listing_id;
 
-    // Insert images
+    // Insert images with link field - FIXED: use description instead of link
     const insertImagePromises = req.files.map(file => {
       const image_url = `/uploads/${file.filename}`;
       const insertImageQuery = `
-        INSERT INTO properties_imagetbl (listing_id, image_url)
-        VALUES ($1, $2)
+        INSERT INTO properties_imagetbl (listing_id, image_url, link)
+        VALUES ($1, $2, $3)
       `;
-      return pool.query(insertImageQuery, [listing_id, image_url]);
+      return pool.query(insertImageQuery, [listing_id, image_url, description || null]);
     });
 
     await Promise.all(insertImagePromises);
@@ -705,6 +728,436 @@ app.get('/api/properties/:listingId', async (req, res) => {
       message: 'Server error',
       error: error.message 
     });
+  }
+});
+
+// Add this GET endpoint to your existing server code
+app.get('/api/admin-properties', async (req, res) => {
+  try {
+    const query = `
+      SELECT 
+        listing_id,
+        employee_id,
+        lot_name,
+        lot_number,
+        lot_type,
+        price,
+        location,
+        lot_area,
+        status,
+        assigned_agent_id
+      FROM propertiestbl
+      ORDER BY listing_id DESC
+    `;
+    
+    const result = await pool.query(query);
+    
+    return res.status(200).json(result.rows);
+  } catch (err) {
+    console.error('Error fetching properties:', err);
+    return res.status(500).json({ 
+      msg: 'Server error', 
+      error: err.message 
+    });
+  }
+});
+
+// Add this PUT endpoint for status updates
+app.put('/api/admin-properties/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { status } = req.body;
+
+    if (!status) {
+      return res.status(400).json({ msg: 'Status is required' });
+    }
+
+    // Convert any frontend status to lowercase DB version
+    const dbStatus = status.toLowerCase(); 
+    // Expected values: "available", "pending", "declined"
+
+    const query = `
+      UPDATE propertiestbl 
+      SET status = $1 
+      WHERE listing_id = $2
+      RETURNING *
+    `;
+
+    const result = await pool.query(query, [dbStatus, id]);
+
+    if (result.rows.length === 0) {
+      return res.status(404).json({ msg: 'Property not found' });
+    }
+
+    return res.status(200).json({
+      msg: 'Property updated successfully',
+      property: result.rows[0]
+    });
+
+  } catch (err) {
+    console.error('Error updating property:', err);
+    return res.status(500).json({
+      msg: 'Server error',
+      error: err.message
+    });
+  }
+});
+
+app.get("/api/appointment-info", async (req, res) => {
+  const { customer_id, listing_id } = req.query;
+
+  if (!customer_id || !listing_id) {
+    return res.status(400).json({ error: "customer_id and listing_id required" });
+  }
+
+  try {
+    // Get customer info
+    const customerQuery = `
+      SELECT email, phonenumber
+      FROM customertbl
+      WHERE customer_id = $1
+    `;
+    const customerResult = await pool.query(customerQuery, [customer_id]);
+
+    if (customerResult.rows.length === 0) {
+      return res.status(404).json({ error: "Customer not found" });
+    }
+
+    // Get agent info using assigned_agent_id
+    const agentQuery = `
+      SELECT e.employee_id, e.firstname, e.lastname
+      FROM propertiestbl p
+      LEFT JOIN employeetbl e ON e.employee_id = p.assigned_agent_id
+      WHERE p.listing_id = $1
+    `;
+    const agentResult = await pool.query(agentQuery, [listing_id]);
+
+    const agent = agentResult.rows[0] || {};
+
+    res.json({
+      email: customerResult.rows[0].email,
+      phonenumber: customerResult.rows[0].phonenumber,
+      agent_firstname: agent.firstname || null,
+      agent_lastname: agent.lastname || null,
+      employee_id: agent.employee_id || null,
+    });
+  } catch (err) {
+    console.error("GET appointment-info error:", err);
+    res.status(500).json({ error: "Server error" });
+  }
+});
+
+// POST book appointment
+app.post("/api/book-appointment", async (req, res) => {
+  const { customer_id, listing_id, employee_id, visitdate, visittime } = req.body;
+
+  if (!customer_id || !listing_id || !employee_id || !visitdate || !visittime) {
+    return res.status(400).json({ error: "Missing fields" });
+  }
+
+  try {
+    const insertQuery = `
+      INSERT INTO bookingtbl
+      (customer_id, listing_id, employee_id, visitdate, visittime, bookingstatus)
+      VALUES ($1, $2, $3, $4, $5, 'pending')
+      RETURNING *
+    `;
+    const result = await pool.query(insertQuery, [
+      customer_id,
+      listing_id,
+      employee_id,
+      visitdate,
+      visittime,
+    ]);
+
+    res.json({
+      success: true,
+      message: "Booking created successfully",
+      booking: result.rows[0],
+    });
+  } catch (err) {
+    console.error("POST book-appointment error:", err);
+    res.status(500).json({ error: "Server error" });
+  }
+});
+
+// New API endpoint to get employee appointments for a specific date
+// GET all booked times for a given employee + date
+app.get('/api/employee-appointments', async (req, res) => {
+  const { employee_id, date } = req.query;
+
+  if (!employee_id || !date) {
+    return res.status(400).json({ error: "Missing employee_id or date" });
+  }
+
+  try {
+    const query = `
+      SELECT visittime, COUNT(*) as booking_count
+      FROM bookingtbl
+      WHERE employee_id = $1
+        AND visitdate = $2
+        AND (bookingstatus IS NULL OR bookingstatus != 'cancelled')
+      GROUP BY visittime
+    `;
+
+    const result = await pool.query(query, [employee_id, date]);
+
+    const appointments = {};
+
+    result.rows.forEach(row => {
+      // Normalize time: "08:00:00" → "08:00"
+      const normalized = row.visittime.slice(0, 5);
+      appointments[normalized] = parseInt(row.booking_count);
+    });
+
+    return res.json({ appointments });
+
+  } catch (error) {
+    console.error("Error fetching employee appointments:", error);
+    return res.status(500).json({ error: "Failed to fetch employee appointments" });
+  }
+});
+
+app.get("/api/bookings/:customerId", async (req, res) => {
+  const customerId = req.params.customerId;
+  const status = req.query.status;
+
+  let query = `
+    SELECT 
+      b.booking_id,
+      b.customer_id,
+      b.listing_id,
+      b.employee_id,
+      b.visitdate,
+      b.visittime,
+      b.bookingstatus,
+      l.lot_name,
+      l.location,
+      l.price,
+      l.lot_area,
+      e.firstname AS agent_first_name,
+      e.lastname AS agent_last_name
+    FROM bookingtbl b
+    JOIN propertiestbl l ON b.listing_id = l.listing_id
+    LEFT JOIN employeetbl e ON b.employee_id = e.employee_id
+  `;
+
+  const conditions = [];
+  const params = [];
+
+  conditions.push("b.customer_id = $1");
+  params.push(customerId);
+
+  if (status) {
+    conditions.push("b.bookingstatus = $" + (params.length + 1));
+    params.push(status.toLowerCase());
+  }
+
+  if (conditions.length) {
+    query += " WHERE " + conditions.join(" AND ");
+  }
+
+  try {
+    const result = await pool.query(query, params);
+    res.json(result.rows);
+  } catch (error) {
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
+
+// Example backend route to get appointments with joins
+// Get appointments with correct column names
+app.get('/api/agent/appointments', async (req, res) => {
+  try {
+    const { status } = req.query;
+    
+    let query = `
+      SELECT 
+        b.booking_id,
+        b.visitdate as appointment_date,
+        b.visittime as appointment_time,
+        b.bookingstatus,
+        u.firstname,
+        u.lastname,
+        u.phonenumber,
+        u.email,
+        u.address
+      FROM bookingtbl b
+      JOIN customertbl u ON b.customer_id = u.customer_id
+      WHERE b.bookingstatus IN ('pending', 'approved', 'declined')
+    `;
+    
+    // Add status filter if provided
+    if (status && status !== 'all') {
+      query += ` AND b.bookingstatus = $1`;
+    }
+    
+    query += ` ORDER BY b.visitdate ASC`;
+    
+    let result;
+    if (status && status !== 'all') {
+      result = await pool.query(query, [status]);
+    } else {
+      result = await pool.query(query);
+    }
+    
+    res.json(result.rows); // For PostgreSQL
+    // For MySQL: res.json(result[0]); 
+  } catch (error) {
+    console.error('Error fetching appointments:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+// Approve appointment route
+app.put('/api/agent/appointments/:id/approve', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const query = 'UPDATE bookingtbl SET bookingstatus = $1 WHERE booking_id = $2';
+    const result = await pool.query(query, ['approved', id]);
+    res.json({ message: 'Appointment approved successfully' });
+  } catch (error) {
+    console.error('Error approving appointment:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+// Decline appointment route
+app.put('/api/agent/appointments/:id/decline', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const query = 'UPDATE bookingtbl SET bookingstatus = $1 WHERE booking_id = $2';
+    const result = await pool.query(query, ['declined', id]);
+    res.json({ message: 'Appointment declined successfully' });
+  } catch (error) {
+    console.error('Error declining appointment:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+// Get lot details for a booking/listing
+app.get('/api/agent/properties/:listingId', async (req, res) => {
+  try {
+    const { listingId } = req.params;
+
+    // Fetch lot details
+    const lotQuery = `
+      SELECT 
+        listing_id,
+        employee_id,
+        lot_name,
+        lot_number,
+        lot_type,
+        price,
+        location,
+        lot_area,
+        status
+      FROM propertiestbl
+      WHERE listing_id = $1
+    `;
+
+    const lotResult = await pool.query(lotQuery, [listingId]);
+
+    if (lotResult.rows.length === 0) {
+      return res.status(404).json({ error: 'Lot not found' });
+    }
+
+    const lotDetails = lotResult.rows[0];
+
+    res.json(lotDetails);
+  } catch (error) {
+    console.error('Error fetching lot details:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+// Get the last image for a listing
+app.get('/api/agent/properties/:listingId/images/last', async (req, res) => {
+  try {
+    const { listingId } = req.params;
+
+    const imageQuery = `
+      SELECT images_id, listing_id, image_url, link
+      FROM properties_imagetbl
+      WHERE listing_id = $1
+      ORDER BY images_id DESC
+      LIMIT 1
+    `;
+
+    const imageResult = await pool.query(imageQuery, [listingId]);
+
+    if (imageResult.rows.length === 0) {
+      return res.status(404).json({ error: 'No images found for this lot' });
+    }
+
+    res.json(imageResult.rows[0]);
+  } catch (error) {
+    console.error('Error fetching lot image:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+app.get('/api/agent/bookings/:bookingId/lot', async (req, res) => {
+  try {
+    const { bookingId } = req.params;
+
+    const query = `
+      SELECT p.listing_id, p.lot_name, p.lot_number, p.lot_type,
+             p.price, p.location, p.lot_area, p.status
+      FROM bookingtbl b
+      JOIN propertiestbl p ON b.listing_id = p.listing_id
+      WHERE b.booking_id = $1
+    `;
+
+    const result = await pool.query(query, [bookingId]);
+
+    if (result.rows.length === 0) {
+      return res.status(404).json({ error: 'Lot not found for this booking' });
+    }
+
+    res.json(result.rows[0]);
+  } catch (error) {
+    console.error('Error fetching lot for booking:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+// GET property details
+app.get('/api/properties/:listingId', async (req, res) => {
+  try {
+    const { listingId } = req.params;
+    
+    const result = await pool.query(
+      `SELECT * FROM propertiestbl WHERE listing_id = $1`,
+      [listingId]
+    );
+    
+    if (result.rows.length === 0) {
+      return res.status(404).json({ error: 'Property not found' });
+    }
+    
+    res.json(result.rows[0]);
+  } catch (error) {
+    console.error('Error fetching property details:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+// GET property images
+app.get('/api/properties/:listingId/images', async (req, res) => {
+  try {
+    const { listingId } = req.params;
+    
+    const result = await pool.query(
+      `SELECT * FROM properties_imagetbl WHERE listing_id = $1 ORDER BY images_id`,
+      [listingId]
+    );
+    
+    res.json(result.rows);
+  } catch (error) {
+    console.error('Error fetching property images:', error);
+    res.status(500).json({ error: 'Internal server error' });
   }
 });
 

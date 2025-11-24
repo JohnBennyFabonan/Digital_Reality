@@ -16,7 +16,7 @@ const Staff_Property = () => {
       setError(null);
 
       try {
-        const res = await fetch("http://localhost:5000/api/get/properties");
+        const res = await fetch("https://reality-corporation.onrender.com/api/get/properties");
         if (!res.ok) {
           throw new Error("Failed to fetch properties");
         }

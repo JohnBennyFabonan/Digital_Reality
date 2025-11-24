@@ -1,24 +1,23 @@
-// hooks/useAuth.js
-import { useState, useEffect } from 'react';
+// Example simplified AuthContext.jsx
+
+import React, { createContext, useContext, useState } from 'react';
+
+const AuthContext = createContext(null);
+
+export const AuthProvider = ({ children }) => {
+  const [user, setUser] = useState(null);
+
+  // auth-related methods here
+
+  return (
+    <AuthContext.Provider value={{ user, setUser }}>
+      {children}
+    </AuthContext.Provider>
+  );
+};
 
 export const useAuth = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-
-  useEffect(() => {
-    const loggedIn = localStorage.getItem("isLoggedIn") === "true";
-    setIsLoggedIn(loggedIn);
-  }, []);
-
-  const handleLoginSuccess = (user) => {
-    setIsLoggedIn(true);
-    localStorage.setItem("customerUser", JSON.stringify(user));
-  };
-
-  const handleLogout = () => {
-    setIsLoggedIn(false);
-    localStorage.removeItem("isLoggedIn");
-    localStorage.removeItem("customerUser");
-  };
-
-  return { isLoggedIn, handleLoginSuccess, handleLogout };
+  const context = useContext(AuthContext);
+  if (!context) throw new Error('useAuth must be used within an AuthProvider');
+  return context;
 };

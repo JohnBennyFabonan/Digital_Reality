@@ -134,7 +134,7 @@ const Customer_AccountSett = () => {
         updateData.password = formData.password;
       }
 
-      const res = await fetch(`http://localhost:5000/api/customers/${user.customer_id || user.id}`, {
+      const res = await fetch(`https://reality-corporation.onrender.com/api/customers/${user.customer_id || user.id}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(updateData),

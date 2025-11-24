@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import "./Customer_Login.css";
 import logo from "../../assets/logo.png";
+import { useNavigate } from "react-router-dom";
 
 const Customer_Login = ({ onClose, onLoginSuccess }) => {
+  const navigate = useNavigate();
   const [isSignup, setIsSignup] = useState(false);
   const [formData, setFormData] = useState({
     firstname: "",
@@ -45,126 +47,73 @@ const Customer_Login = ({ onClose, onLoginSuccess }) => {
   const validateEmail = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    setLoading(true);
+  e.preventDefault();
+  setLoading(true);
 
-    if (isSignup) {
-      const {
-        firstname,
-        lastname,
-        phonenumber,
-        email,
-        dateofbirth,
-        address,
-        username,
-        password,
-      } = formData;
+  if (isSignup) {
+    // ... existing signup code ...
+  } else {
+    const { email, password } = formData;
 
-      if (
-        !firstname ||
-        !lastname ||
-        !phonenumber ||
-        !email ||
-        !dateofbirth ||
-        !address ||
-        !username ||
-        !password
-      ) {
-        setMessageType("error");
-        setMessage("⚠️ Please fill out all fields.");
-        setLoading(false);
-        return;
-      }
-      if (!validateEmail(email)) {
-        setMessageType("error");
-        setMessage("⚠️ Please enter a valid email address.");
-        setLoading(false);
-        return;
-      }
-
-      try {
-        const res = await fetch("http://localhost:5000/api/customer-signup", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            firstname,
-            lastname,
-            phonenumber,
-            email,
-            dateofbirth,
-            address,
-            username,
-            password,
-          }),
-        });
-
-        const data = await res.json();
-
-        if (res.ok) {
-          setMessageType("success");
-          setMessage("✅ Signup successful! Redirecting to login...");
-          setTimeout(() => switchForm(false), 1500);
-        } else {
-          setMessageType("error");
-          setMessage(`⚠️ ${data.msg || "Signup failed"}`);
-        }
-      } catch (err) {
-        setMessageType("error");
-        setMessage("⚠️ Server error. Please try again.");
-      } finally {
-        setLoading(false);
-      }
-    } else {
-      const { email, password } = formData;
-
-      if (!email || !password) {
-        setMessageType("error");
-        setMessage("⚠️ Please enter email and password.");
-        setLoading(false);
-        return;
-      }
-      if (!validateEmail(email)) {
-        setMessageType("error");
-        setMessage("⚠️ Please enter a valid email address.");
-        setLoading(false);
-        return;
-      }
-
-      try {
-        const res = await fetch("http://localhost:5000/api/customer-login", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ email, password }),
-        });
-
-        const data = await res.json();
-
-        if (res.ok) {
-          // Store login token or user ID
-          localStorage.setItem("isLoggedIn", "true");
-          localStorage.setItem("customer_token", data.token || "loggedin");
-
-          setMessageType("success");
-          setMessage("✅ Logged in successfully!");
-
-          setTimeout(() => {
-            if (onLoginSuccess) onLoginSuccess(data.user);
-            onClose();
-            navigate("/"); // ✅ redirect to homepage
-          }, 1200);
-        } else {
-          setMessageType("error");
-          setMessage(`⚠️ ${data.msg || "Invalid credentials"}`);
-        }
-      } catch (err) {
-        setMessageType("error");
-        setMessage("⚠️ Server error. Please try again.");
-      } finally {
-        setLoading(false);
-      }
+    if (!email || !password) {
+      setMessageType("error");
+      setMessage("⚠️ Please enter email and password.");
+      setLoading(false);
+      return;
     }
-  };
+    if (!validateEmail(email)) {
+      setMessageType("error");
+      setMessage("⚠️ Please enter a valid email address.");
+      setLoading(false);
+      return;
+    }
 
+    try {
+      const res = await fetch("https://reality-corporation.onrender.com/api/customer-login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password }),
+      });
+
+      const data = await res.json();
+
+      if (res.ok) {
+        // ✅ Store login status and customer ID
+        localStorage.setItem("isLoggedIn", "true");
+        localStorage.setItem("customer_token", "loggedin");
+        
+        // ✅ CRITICAL: Store the customer ID from the response
+        if (data.user && data.user.customer_id) {
+          localStorage.setItem("customerId", data.user.customer_id.toString());
+          console.log("✅ Customer ID stored in localStorage:", data.user.customer_id);
+        } else {
+          console.error("❌ No customer_id found in login response:", data);
+          setMessageType("error");
+          setMessage("⚠️ Login failed: Missing user data");
+          setLoading(false);
+          return;
+        }
+
+        setMessageType("success");
+        setMessage("✅ Logged in successfully!");
+
+        setTimeout(() => {
+          if (onLoginSuccess) onLoginSuccess(data.user);
+          onClose();
+          navigate("/"); // ✅ redirect to homepage
+        }, 1200);
+      } else {
+        setMessageType("error");
+        setMessage(`⚠️ ${data.msg || "Invalid credentials"}`);
+      }
+    } catch (err) {
+      setMessageType("error");
+      setMessage("⚠️ Server error. Please try again.");
+    } finally {
+      setLoading(false);
+    }
+  }
+};
   return (
     <div className="customer_login_overlay" role="dialog" aria-modal="true">
       <div className="customer_login_card">

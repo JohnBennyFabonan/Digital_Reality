@@ -9,7 +9,7 @@ const Admin_AgentTable = () => {
   useEffect(() => {
     const fetchAgents = async () => {
       try {
-        const res = await fetch("http://localhost:5000/api/agents");
+        const res = await fetch("https://reality-corporation.onrender.com/api/agents");
         const data = await res.json();
         setAgentData(data);
       } catch (error) {

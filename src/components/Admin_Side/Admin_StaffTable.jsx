@@ -9,7 +9,7 @@ const Admin_StaffTable = () => {
   useEffect(() => {
     const fetchStaff = async () => {
       try {
-        const res = await fetch("http://localhost:5000/api/staff");
+        const res = await fetch("https://reality-corporation.onrender.com/api/staff");
         const data = await res.json();
         setStaffData(data);
       } catch (error) {

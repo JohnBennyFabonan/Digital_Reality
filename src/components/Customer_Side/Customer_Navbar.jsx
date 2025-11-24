@@ -1,45 +1,75 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import "./Customer_Navbar.css";
 import Customer_Login from "./Customer_Login";
 import { FaUserCircle } from "react-icons/fa";
 import { useNavigate, useLocation } from "react-router-dom";
-import { useAuth } from "../../context/AuthContext";
 
 const Customer_Navbar = () => {
   const [showLogin, setShowLogin] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [showDropdown, setShowDropdown] = useState(false);
-  const { isLoggedIn, handleLoginSuccess, handleLogout } = useAuth();
 
   const dropdownRef = useRef(null);
   const navigate = useNavigate();
   const location = useLocation();
 
-  const handleLogoutClick = () => {
-    handleLogout();
+  // Load login state from localStorage when component mounts
+  useEffect(() => {
+    const loggedIn = localStorage.getItem("isLoggedIn");
+    if (loggedIn === "true") {
+      setIsLoggedIn(true);
+    }
+  }, []);
+
+  // When user logs in
+  const handleLoginSuccess = (user) => {
+    setIsLoggedIn(true);
+    localStorage.setItem("isLoggedIn", "true");
+    localStorage.setItem("customerUser", JSON.stringify(user));
+    setShowLogin(false);
+  };
+
+  const handleLogout = async () => {
+    try {
+      // Tell backend to log out
+      await fetch("https://reality-corporation.onrender.com/api/logout", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+      });
+
+      // Clear local storage and frontend state
+      localStorage.removeItem("isLoggedIn");
+      localStorage.removeItem("customerUser");
+      setIsLoggedIn(false);
+      setShowDropdown(false);
+
+      // Redirect to home
+      navigate("/");
+    } catch (error) {
+      console.error("Logout failed:", error);
+    }
+  };
+
+  const handleProfileClick = (e) => {
+    if (e) e.preventDefault();
+    setShowDropdown(false);
+    navigate("/customer-account-sett");
+  };
+
+  const handleAppointmentsClick = (e) => {
+    if (e) e.preventDefault();
+    setShowDropdown(false);
+    navigate("/customer-appointment-sett");
+  };
+
+  const handleHomeClick = (e) => {
+    if (e) e.preventDefault();
     setShowDropdown(false);
     navigate("/");
   };
 
-  const handleProfileClick = () => {
-    setShowDropdown(false);
-    if (location.pathname === "/customer-account-sett") {
-      navigate("/");
-    } else {
-      navigate("/customer-account-sett");
-    }
-  };
-
-  const handleAppointmentsClick = () => {
-    setShowDropdown(false);
-    if (location.pathname === "/customer-appointment-sett") {
-      navigate("/customer-account-sett");
-    } else {
-      navigate("/customer-appointment-sett");
-    }
-  };
-
   // Close dropdown on outside click
-  React.useEffect(() => {
+  useEffect(() => {
     const handleClickOutside = (event) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
         setShowDropdown(false);
@@ -49,6 +79,8 @@ const Customer_Navbar = () => {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
+  // Check current page
+  const isLandingPage = location.pathname === "/";
   const isProfilePage = location.pathname === "/customer-account-sett";
   const isAppointmentsPage = location.pathname === "/customer-appointment-sett";
 
@@ -63,9 +95,13 @@ const Customer_Navbar = () => {
         <div className="customer_navbar_right">
           {!isLoggedIn ? (
             <>
-              <a href="#" onClick={() => setShowLogin(true)}>
+              <span
+                className="customer_navbar_signup"
+                onClick={() => setShowLogin(true)}
+                style={{ cursor: "pointer" }}
+              >
                 SIGN-UP
-              </a>
+              </span>
             </>
           ) : (
             <div className="customer_navbar_profile" ref={dropdownRef}>
@@ -76,13 +112,12 @@ const Customer_Navbar = () => {
               {showDropdown && (
                 <div className="customer_navbar_dropdown">
                   <ul>
-                    <li onClick={handleProfileClick}>
-                      {isProfilePage ? "Home" : "My Profile"}
-                    </li>
-                    <li onClick={handleAppointmentsClick}>
-                      {isAppointmentsPage ? "My Profile" : "My Appointments"}
-                    </li>
-                    <li onClick={handleLogoutClick}>Logout</li>
+                    {!isLandingPage && <li onClick={handleHomeClick}>Home</li>}
+                    {!isProfilePage && <li onClick={handleProfileClick}>My Profile</li>}
+                    {!isAppointmentsPage && (
+                      <li onClick={handleAppointmentsClick}>My Appointments</li>
+                    )}
+                    <li onClick={handleLogout}>Logout</li>
                   </ul>
                 </div>
               )}

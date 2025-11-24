@@ -14,7 +14,7 @@ function Customer_LandingPage() {
     const fetchProperties = async () => {
       try {
         console.log('🔄 Fetching properties from backend...');
-        const response = await fetch('http://localhost:5000/api/lot_properties');
+        const response = await fetch('https://reality-corporation.onrender.com/api/lot_properties');
         
         console.log('📡 Response status:', response.status);
         

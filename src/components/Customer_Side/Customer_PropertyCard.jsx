@@ -20,7 +20,7 @@ const Customer_PropertyCard = ({ property }) => {
       }
       
       try {
-        const response = await fetch(`http://localhost:5000/api/property-images/${property.listing_id}`);
+        const response = await fetch(`https://reality-corporation.onrender.com/api/property-images/${property.listing_id}`);
         
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
@@ -112,7 +112,7 @@ const Customer_PropertyCard = ({ property }) => {
             <div className="customer-property-card-image-gallery">
               {/* Main image */}
               <img 
-                src={`http://localhost:5000${imageUrls[0]}`} 
+                src={`https://reality-corporation.onrender.com${imageUrls[0]}`} 
                 alt={`${property.lot_name || 'Property'} - ${property.lot_number || ''}`}
                 className="customer-property-card-main-image"
                 onError={handleImageError}
@@ -123,7 +123,7 @@ const Customer_PropertyCard = ({ property }) => {
                   {imageUrls.slice(1, 4).map((imageUrl, index) => (
                     <img 
                       key={index}
-                      src={`http://localhost:5000${imageUrl}`}
+                      src={`https://reality-corporation.onrender.com${imageUrl}`}
                       alt={`${property.lot_name || 'Property'} - ${index + 2}`}
                       className="customer-property-card-thumbnail"
                       onError={handleThumbnailError}

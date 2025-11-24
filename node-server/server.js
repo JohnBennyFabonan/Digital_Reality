@@ -17,13 +17,21 @@ const upload = multer({ storage: multer.memoryStorage() });
 app.use('/uploads', express.static(path.join(process.cwd(), 'uploads')));
 
 // Middleware
+const allowedOrigins = [
+  "http://localhost:5173",
+  "https://your-frontend.onrender.com",  // your actual frontend URL
+];
+
 app.use(cors({
-  origin: [
-    "http://localhost:5173",
-    "https://digital-reality.onrender.com",   // if your FRONTEND is here
-  ],
-  methods: ["GET", "POST", "PUT", "DELETE"],
-  allowedHeaders: ["Content-Type", "Authorization"]
+  origin: (origin, callback) => {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      console.log("❌ CORS blocked:", origin);
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
+  credentials: true,
 }));
 
 
@@ -34,7 +42,7 @@ const pool = new Pool({
   password: process.env.PG_PASSWORD,
   database: process.env.PG_DATABASE,
   port: process.env.PG_PORT,
-  ssl: false
+  ssl: { rejectUnauthorized: false },
 });
 
 // --------------------
